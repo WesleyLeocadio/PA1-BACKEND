@@ -12,7 +12,7 @@ public class Espaco implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idEspaco;
+	private Integer idEspaco;
 	private String espacoNome;
 	private String espacoDescricao;
     private String espacoLocalizacao;
@@ -22,7 +22,7 @@ public class Espaco implements Serializable {
     
     public Espaco() {}
 
-	public Espaco(int idEspaco, String espacoNome, String espacoDescricao, String espacoLocalizacao,
+	public Espaco(Integer idEspaco, String espacoNome, String espacoDescricao, String espacoLocalizacao,
 			boolean espacoEspecial, String espacoResponsavel, boolean espacoDesabilitado) {
 		super();
 		this.idEspaco = idEspaco;
@@ -34,11 +34,11 @@ public class Espaco implements Serializable {
 		this.espacoDesabilitado = espacoDesabilitado;
 	}
 
-	public int getIdEspaco() {
+	public Integer getIdEspaco() {
 		return idEspaco;
 	}
 
-	public void setIdEspaco(int idEspaco) {
+	public void setIdEspaco(Integer idEspaco) {
 		this.idEspaco = idEspaco;
 	}
 
@@ -94,7 +94,7 @@ public class Espaco implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + idEspaco;
+		result = prime * result + ((idEspaco == null) ? 0 : idEspaco.hashCode());
 		return result;
 	}
 
@@ -107,11 +107,15 @@ public class Espaco implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Espaco other = (Espaco) obj;
-		if (idEspaco != other.idEspaco)
+		if (idEspaco == null) {
+			if (other.idEspaco != null)
+				return false;
+		} else if (!idEspaco.equals(other.idEspaco))
 			return false;
 		return true;
 	}
-    
+
+	
     //Para que os objetos seram comparados pelos seus conteudos (nao pelos ponteiros de memoria) tem que implementar os metodos hash e equals
 	
     
