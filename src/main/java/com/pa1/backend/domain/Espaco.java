@@ -1,11 +1,17 @@
 package com.pa1.backend.domain;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import java.io.Serializable;
 
 //implementando a interface serializable( os objetos sao convertidos em uma sequencia de bytes) pra ser gravados em arquivos, trafegar em rede...
+@Entity
 public class Espaco implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idEspaco;
 	private String espacoNome;
 	private String espacoDescricao;
