@@ -3,8 +3,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 //implementando a interface serializable( os objetos sao convertidos em uma sequencia de bytes) pra ser gravados em arquivos, trafegar em rede...
 @Entity
@@ -19,6 +22,10 @@ public class Espaco implements Serializable {
     private boolean espacoEspecial;
     private String espacoResponsavel;
     private boolean espacoDesabilitado;
+    
+    @OneToMany(mappedBy = "espaco")
+    private List<Reserva> reservas = new ArrayList<>();
+   
     
     public Espaco() {}
 
@@ -88,6 +95,24 @@ public class Espaco implements Serializable {
 
 	public void setEspacoDesabilitado(boolean espacoDesabilitado) {
 		this.espacoDesabilitado = espacoDesabilitado;
+	}
+
+	
+	
+	public List<Reserva> getReservas() {
+		return reservas;
+	}
+
+	public void setReservas(List<Reserva> reservas) {
+		this.reservas = reservas;
+	}
+
+	public boolean isEspacoEspecial() {
+		return espacoEspecial;
+	}
+
+	public void setEspacoEspecial(boolean espacoEspecial) {
+		this.espacoEspecial = espacoEspecial;
 	}
 
 	@Override
