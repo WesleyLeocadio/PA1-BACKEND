@@ -5,6 +5,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,7 @@ public class Espaco implements Serializable {
     private String espacoResponsavel;
     private boolean espacoDesabilitado;
     
+	@JsonBackReference
     @OneToMany(mappedBy = "espaco")
     private List<Reserva> reservas = new ArrayList<>();
    
@@ -39,6 +43,18 @@ public class Espaco implements Serializable {
 		this.espacoEspecial = espacoEspecial;
 		this.espacoResponsavel = espacoResponsavel;
 		this.espacoDesabilitado = espacoDesabilitado;
+	}
+
+	public Espaco(String espacoNome, String espacoDescricao, String espacoLocalizacao, boolean espacoEspecial,
+			String espacoResponsavel, boolean espacoDesabilitado, List<Reserva> reservas) {
+		super();
+		this.espacoNome = espacoNome;
+		this.espacoDescricao = espacoDescricao;
+		this.espacoLocalizacao = espacoLocalizacao;
+		this.espacoEspecial = espacoEspecial;
+		this.espacoResponsavel = espacoResponsavel;
+		this.espacoDesabilitado = espacoDesabilitado;
+		this.reservas = reservas;
 	}
 
 	public Integer getIdEspaco() {
