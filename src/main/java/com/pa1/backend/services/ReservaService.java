@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.pa1.backend.domain.Espaco;
 import com.pa1.backend.domain.Reserva;
+import com.pa1.backend.dto.ReservaDTO;
 import com.pa1.backend.repositories.EspacoRepository;
 import com.pa1.backend.repositories.ReservaRepository;
 
@@ -22,6 +23,18 @@ public class ReservaService {
 		return repo.findAll();
 }
 	
+
+	public Reserva insert(Reserva obj) {
+		obj.setIdReserva(null);
+		return repo.save(obj);
+	}
+	
+	public Reserva fromDTO(ReservaDTO objDto) {
+		Reserva r1 = new Reserva(null,objDto.getDataReserva(),objDto.getHorarios(),
+				objDto.getResponsavel(),objDto.getEspaco());
+		return r1;
+		
+	}
 
 
 }
