@@ -1,5 +1,6 @@
 package com.pa1.backend.services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,12 @@ public class ReservaService {
 	private ReservaRepository repo;
 	 //uma operacao q buscar um  espaco por codigo
 
+	public List<Reserva> findByDate(Date d){
+		return repo.findByDate(d);
+	}
 	public List<Reserva> findAll() {
 		return repo.findAll();
-}
+	}
 	
 
 	public Reserva insert(Reserva obj) {

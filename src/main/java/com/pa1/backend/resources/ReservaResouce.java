@@ -1,6 +1,7 @@
 package com.pa1.backend.resources;
 
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
