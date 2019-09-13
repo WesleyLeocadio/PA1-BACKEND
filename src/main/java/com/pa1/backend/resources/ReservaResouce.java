@@ -24,16 +24,23 @@ import com.pa1.backend.services.ReservaService;
 
 //classe vai ser um controlador REST
 @RestController
-@RequestMapping(value = "/reservas") // vai responder por este endPoint
+//@RequestMapping(value = "/reservas") // vai responder por este endPoint
 public class ReservaResouce {
 
 	@Autowired
 	private ReservaService service;
 
 	
-	@RequestMapping( method = RequestMethod.GET) 
+	@RequestMapping(value = "/reservas1/",method = RequestMethod.GET)
 	public ResponseEntity<List<Reserva>> findAll() {
 		List<Reserva> list= service.findAll();
+		return ResponseEntity.ok().body(list);
+
+	}
+
+	@RequestMapping(value = "/reservas2/",method = RequestMethod.GET)
+	public ResponseEntity<List<Reserva>> findByDate() {
+		List<Reserva> list= service.findByDate(new Date());
 		return ResponseEntity.ok().body(list);
 
 	}
