@@ -31,12 +31,12 @@ public class StartApplication implements CommandLineRunner {
 		Espaco esp1 = new Espaco(null,"Lab 2","Laboratório de informática","Prédio de Informática",false,"Luiz Antônio",false);
 		Espaco esp2 = new Espaco(null,"Lab 3","Sala de estudos","Prédio de Informática",false,"Luiz Antônio",false);
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
 		 Integer horarios[] = {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
-		Reserva r1 = new Reserva(null,sdf.parse("30/09/2019 10:32"),horarios,"Taniro",esp1);		
-		Reserva r2 = new Reserva(null,sdf.parse("20/09/2019 05:32"),horarios,"Laura",esp2);		
+		Reserva r1 = new Reserva(null,sdf.parse("30-09-2019"),horarios,"Taniro",esp1);
+		Reserva r2 = new Reserva(null,sdf.parse("20-09-2019"),horarios,"Laura",esp2);
 		
 		
 		esp1.getReservas().addAll(Arrays.asList(r1));

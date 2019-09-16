@@ -7,13 +7,9 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pa1.backend.domain.Espaco;
@@ -24,25 +20,24 @@ import com.pa1.backend.services.ReservaService;
 
 //classe vai ser um controlador REST
 @RestController
-//@RequestMapping(value = "/reservas") // vai responder por este endPoint
+@RequestMapping(value = "/reservas") // vai responder por este endPoint
 public class ReservaResouce {
 
 	@Autowired
 	private ReservaService service;
 
 	
-	@RequestMapping(value = "/reservas1/",method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<Reserva>> findAll() {
 		List<Reserva> list= service.findAll();
 		return ResponseEntity.ok().body(list);
 
 	}
 
-	@RequestMapping(value = "/reservas2/",method = RequestMethod.GET)
-	public ResponseEntity<List<Reserva>> findByDate() {
-		List<Reserva> list= service.findByDate(new Date());
+	@RequestMapping(path = {"/date"},method = RequestMethod.GET)
+	public ResponseEntity<List<Reserva>> findByDate(@RequestParam @DateTimeFormat(pattern="dd-MM-yyyy")  Date date) {
+		List<Reserva> list= service.findByDate(date);
 		return ResponseEntity.ok().body(list);
-
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
