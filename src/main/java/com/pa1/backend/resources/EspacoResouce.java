@@ -22,7 +22,7 @@ public class EspacoResouce {
 	@Autowired
 	private EspacoService service;
 
-	//Listar espaco por id
+	//Buscar espaco por id
 	// pra ser uma função REST é preciso associar com algum dos verbos do http
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET) // como tô obtendo dados uso o metodo get
 	public ResponseEntity<?> find(@PathVariable Integer id) {// ResponseEntity<?> tipo especial do spring que ja

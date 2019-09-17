@@ -26,6 +26,13 @@ public class ReservaResouce {
 	@Autowired
 	private ReservaService service;
 
+	//Buscar reserva pelo id
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> find(@PathVariable Integer id) {
+		Reserva obj = service.buscar(id);
+		return ResponseEntity.ok().body(obj);
+	}
+
 	//Listar todas as Reservas
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<Reserva>> findAll() {

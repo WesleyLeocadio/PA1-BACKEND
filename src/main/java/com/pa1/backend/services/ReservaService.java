@@ -34,6 +34,12 @@ public class ReservaService {
 		return repo.findByEspaco(e);
 	}
 
+	//Buscar reserva pelo id
+	public Reserva buscar(Integer id) {
+		Reserva obj = repo.findOne(id);
+		return obj;
+	}
+
 	public Reserva insert(Reserva obj) {
 		obj.setIdReserva(null);
 		return repo.save(obj);
