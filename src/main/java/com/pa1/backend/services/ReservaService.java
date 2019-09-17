@@ -19,11 +19,19 @@ public class ReservaService {
 	@Autowired //vai ser instanciado autmatico
 	private ReservaRepository repo;
 
+	//Listar Reservas de uma data especifica
 	public List<Reserva> findByDate(Date d){
 		return repo.findByDate(d);
 	}
+
+	//Listar todas as reservas
 	public List<Reserva> findAll() {
 		return repo.findAll();
+	}
+
+	//Listar reservas de um Espaco especifico
+	public List<Reserva> findByEspaco(Espaco e){
+		return repo.findByEspaco(e);
 	}
 
 	public Reserva insert(Reserva obj) {

@@ -34,6 +34,13 @@ public class ReservaResouce {
 
 	}
 
+	//Listar Reservas de um Espaco
+	@RequestMapping(path = {"/espaco"}, method = RequestMethod.GET)
+	public ResponseEntity<List<Reserva>> findByEspaci(@RequestParam Espaco espaco){
+		List<Reserva> list = service.findByEspaco(espaco);
+		return  ResponseEntity.ok().body(list);
+	}
+
 	//Listar Reservas pela data
 	@RequestMapping(path = {"/date"},method = RequestMethod.GET)
 	public ResponseEntity<List<Reserva>> findByDate(@RequestParam @DateTimeFormat(pattern="dd-MM-yyyy")  Date date) {

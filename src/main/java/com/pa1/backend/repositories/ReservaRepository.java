@@ -14,4 +14,7 @@ import java.util.List;
 public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
     @Query(value = "SELECT * FROM RESERVA WHERE DATA_RESERVA = ?1", nativeQuery = true)
     List<Reserva> findByDate(Date d);
+
+    @Query(value = "SELECT * FROM RESERVA WHERE ESPACO_ID = ?1", nativeQuery = true)
+    List<Reserva> findByEspaco(Espaco e);
 }
