@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -20,20 +22,22 @@ import com.pa1.backend.services.ReservaService;
 
 //classe vai ser um controlador REST
 @RestController
-@RequestMapping(value = "/reservas") // vai responder por este endPoint
+@RequestMapping(value = "/reservas")
 public class ReservaResouce {
 
 	@Autowired
 	private ReservaService service;
 
-	//Buscar reserva pelo id
+	@ApiOperation("Buscar reserva pelo id")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<?> findById(
+			@ApiParam("Id do objeto cadastrado de Reserva")
+			@PathVariable Integer id) {
 		Reserva obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
-	//Listar todas as Reservas
+	@ApiOperation("Listar todas as Reservas")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<Reserva>> findAll() {
 		List<Reserva> list= service.findAll();
@@ -41,29 +45,34 @@ public class ReservaResouce {
 
 	}
 
-	//Listar Reservas de um Espaco
+	@ApiOperation("Listar Reservas de um Espaço")
 	@RequestMapping(path = {"/espaco"}, method = RequestMethod.GET)
-	public ResponseEntity<List<Reserva>> findByEspaci(@RequestParam Espaco espaco){
+	public ResponseEntity<List<Reserva>> findByEspaci(
+			@ApiParam("Id do Espaco")
+			@RequestParam Espaco espaco){
 		List<Reserva> list = service.findByEspaco(espaco);
 		return  ResponseEntity.ok().body(list);
 	}
 
-	//Listar Reservas pela data
+	@ApiOperation("Listar Reservas pela data")
 	@RequestMapping(path = {"/date"},method = RequestMethod.GET)
-	public ResponseEntity<List<Reserva>> findByDate(@RequestParam @DateTimeFormat(pattern="dd-MM-yyyy")  Date date) {
+	public ResponseEntity<List<Reserva>> findByDate(
+			@ApiParam("Data")
+			@RequestParam @DateTimeFormat(pattern="dd-MM-yyyy")  Date date) {
 		List<Reserva> list= service.findByDate(date);
 		return ResponseEntity.ok().body(list);
 	}
 
-	//Cadastrar Reserva
+	@ApiOperation("Cadastrar Reserva")
 	@RequestMapping(method = RequestMethod.POST)
-	public  ResponseEntity<Void> insert(@Valid @RequestBody ReservaDTO objDto ){
+	public  ResponseEntity<Void> insertReserva(
+			@ApiParam("Objeto de Reserva para salvar no Banco de dados")
+			@Valid @RequestBody ReservaDTO objDto ){
 		Reserva obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdReserva())
 				.toUri();
 		return ResponseEntity.created(uri).build();
-		
 	}
 
 }

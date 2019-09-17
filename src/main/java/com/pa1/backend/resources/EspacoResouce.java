@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import com.pa1.backend.dto.EspacoDTO;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,17 +24,16 @@ public class EspacoResouce {
 	@Autowired
 	private EspacoService service;
 
-	//Buscar espaco por id
-	// pra ser uma função REST é preciso associar com algum dos verbos do http
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET) // como tô obtendo dados uso o metodo get
-	public ResponseEntity<?> find(@PathVariable Integer id) {// ResponseEntity<?> tipo especial do spring que ja
-																// encapsula varias informações de uma respota http para
-																// um servico rest
+	@ApiOperation("Buscar Espaço pelo id")
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> findById(
+			@ApiParam("Id do objeto cadastrado de Espaço")
+			@PathVariable Integer id) {
 		Espaco obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
-	//Listar todos os espaços
+	@ApiOperation("Listar todos os Espaços")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<Espaco>> findAll() {
 		List<Espaco> list= service.findAll();
@@ -40,9 +41,11 @@ public class EspacoResouce {
 
 	}
 
-	//Cadastrar Espaco
+	@ApiOperation("Cadastrar um Espaço")
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody EspacoDTO objDto) {
+	public ResponseEntity<Void> insertEspaco(
+			@ApiParam("Objeto de Espaço para salvar no Banco de dados")
+			@RequestBody EspacoDTO objDto) {
 		Espaco obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdEspaco()).toUri();
