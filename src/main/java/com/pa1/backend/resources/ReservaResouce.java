@@ -26,7 +26,7 @@ public class ReservaResouce {
 	@Autowired
 	private ReservaService service;
 
-	
+	//Listar todas as Reservas
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<Reserva>> findAll() {
 		List<Reserva> list= service.findAll();
@@ -34,23 +34,22 @@ public class ReservaResouce {
 
 	}
 
+	//Listar Reservas pela data
 	@RequestMapping(path = {"/date"},method = RequestMethod.GET)
 	public ResponseEntity<List<Reserva>> findByDate(@RequestParam @DateTimeFormat(pattern="dd-MM-yyyy")  Date date) {
 		List<Reserva> list= service.findByDate(date);
 		return ResponseEntity.ok().body(list);
 	}
-	
+
+	//Cadastrar Reserva
 	@RequestMapping(method = RequestMethod.POST)
 	public  ResponseEntity<Void> insert(@Valid @RequestBody ReservaDTO objDto ){
-		Reserva obj= service.fromDTO(objDto);
-		obj=service.insert(obj);
+		Reserva obj = service.fromDTO(objDto);
+		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdReserva())
 				.toUri();
 		return ResponseEntity.created(uri).build();
 		
 	}
-	
- 
-
 
 }

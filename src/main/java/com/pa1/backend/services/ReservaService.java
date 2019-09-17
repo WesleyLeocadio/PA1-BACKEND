@@ -18,7 +18,6 @@ import javassist.tools.rmi.ObjectNotFoundException;
 public class ReservaService {
 	@Autowired //vai ser instanciado autmatico
 	private ReservaRepository repo;
-	 //uma operacao q buscar um  espaco por codigo
 
 	public List<Reserva> findByDate(Date d){
 		return repo.findByDate(d);
@@ -26,7 +25,6 @@ public class ReservaService {
 	public List<Reserva> findAll() {
 		return repo.findAll();
 	}
-	
 
 	public Reserva insert(Reserva obj) {
 		obj.setIdReserva(null);
@@ -39,6 +37,5 @@ public class ReservaService {
 		return r1;
 		
 	}
-
 
 }
