@@ -52,22 +52,22 @@ public class EspacoResouce {
 		return ResponseEntity.created(uri).build();
 	}
 
+/*
 	//Marcar espaco como especial
-	/*
-	#TAVA DANDO ERRO 500 -> Internal Server Error
-	@RequestMapping(path = {"/id"}, method = RequestMethod.PUT)
-	public ResponseEntity<?> updateEspaco(@RequestBody EspacoDTO objDto ,@PathVariable Integer id) {
+	@RequestMapping(path = "/espacoUp", method = RequestMethod.PUT)
+	public ResponseEntity<?> updateEspaco(@RequestBody Espaco obj) {
 
-		Espaco obj = service.buscar(id);
+	    obj = service.buscar(obj.getIdEspaco());
 
 		if(obj == null)
 			return ResponseEntity.notFound().build();
 
-		service.update(obj,id);
+		service.insert(obj);
 
 		return ResponseEntity.noContent().build();
 
 	}
+
 	//Fazendo update com POST
 	@RequestMapping(path = {"/id"}, method = RequestMethod.POST)
 	public ResponseEntity<Void> updateEspaco(@RequestBody EspacoDTO objDto, @PathVariable Integer id) {
