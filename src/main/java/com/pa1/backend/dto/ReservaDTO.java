@@ -8,7 +8,8 @@ import com.pa1.backend.domain.Espaco;
 public class ReservaDTO  implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	private Date dataReserva;
+	private Date dataReservaInicio;
+	private Date dataReservaFim;
 	private Integer horarios[] = new Integer[16];
 	private String responsavel;
 	private Espaco espaco;
@@ -17,12 +18,21 @@ public class ReservaDTO  implements Serializable{
 		
 	}
 
-	public Date getDataReserva() {
-		return dataReserva;
+
+	public Date getDataReservaInicio() {
+		return dataReservaInicio;
 	}
 
-	public void setDataReserva(Date dataReserva) {
-		this.dataReserva = dataReserva;
+	public void setDataReservaInicio(Date dataReservaInicio) {
+		this.dataReservaInicio = dataReservaInicio;
+	}
+
+	public Date getDataReservaFim() {
+		return dataReservaFim;
+	}
+
+	public void setDataReservaFim(Date dataReservaFim) {
+		this.dataReservaFim = dataReservaFim;
 	}
 
 	public Integer[] getHorarios() {

@@ -19,7 +19,8 @@ public class Reserva implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idReserva;
-	private Date dataReserva;
+	private Date dataReservaInicio;
+	private Date dataReservaFim;
 	private Integer horarios[] = new Integer[16];
 	private String responsavel;
 	
@@ -30,13 +31,29 @@ public class Reserva implements Serializable{
 	
 	public Reserva() {}
 
-	public Reserva(Integer idReserva, Date dataReserva, Integer[] horarios, String responsavel, Espaco espaco) {
-		super();
+	public Reserva(Integer idReserva, Date dataReservaInicio, Date dataReservaFim, Integer[] horarios, String responsavel, Espaco espaco) {
 		this.idReserva = idReserva;
-		this.dataReserva = dataReserva;
+		this.dataReservaInicio = dataReservaInicio;
+		this.dataReservaFim = dataReservaFim;
 		this.horarios = horarios;
 		this.responsavel = responsavel;
 		this.espaco = espaco;
+	}
+
+	public Date getDataReservaInicio() {
+		return dataReservaInicio;
+	}
+
+	public void setDataReservaInicio(Date dataReservaInicio) {
+		this.dataReservaInicio = dataReservaInicio;
+	}
+
+	public Date getDataReservaFim() {
+		return dataReservaFim;
+	}
+
+	public void setDataReservaFim(Date dataReservaFim) {
+		this.dataReservaFim = dataReservaFim;
 	}
 
 	public Integer getIdReserva() {
@@ -48,11 +65,11 @@ public class Reserva implements Serializable{
 	}
 
 	public Date getDataReserva() {
-		return dataReserva;
+		return dataReservaInicio;
 	}
 
 	public void setDataReserva(Date dataReserva) {
-		this.dataReserva = dataReserva;
+		this.dataReservaInicio = dataReserva;
 	}
 
 	public Integer[] getHorarios() {

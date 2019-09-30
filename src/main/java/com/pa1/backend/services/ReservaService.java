@@ -46,7 +46,7 @@ public class ReservaService {
 	}
 	
 	public Reserva fromDTO(ReservaDTO objDto) {
-		Reserva r1 = new Reserva(null,objDto.getDataReserva(),objDto.getHorarios(),
+		Reserva r1 = new Reserva(null,objDto.getDataReservaInicio(), objDto.getDataReservaFim(),objDto.getHorarios(),
 				objDto.getResponsavel(),objDto.getEspaco());
 		return r1;
 		

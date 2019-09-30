@@ -40,8 +40,8 @@ public class StartApplication implements CommandLineRunner {
 
 		 Integer horarios[] = {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
-		Reserva r1 = new Reserva(null,sdf.parse("30-09-2019"),horarios,"Taniro",esp1);
-		Reserva r2 = new Reserva(null,sdf.parse("20-09-2019"),horarios,"Laura",esp2);
+		Reserva r1 = new Reserva(null,sdf.parse("30-09-2019"),sdf.parse("30-10-2019"),horarios,"Taniro",esp1);
+		Reserva r2 = new Reserva(null,sdf.parse("20-09-2019"),sdf.parse("30-09-2019"),horarios,"Laura",esp2);
 		
 		
 		
