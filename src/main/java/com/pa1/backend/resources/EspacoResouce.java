@@ -32,6 +32,9 @@ public class EspacoResouce {
 		Espaco obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj);
 	}
+	
+
+
 
 	@ApiOperation("Listar todos os Espaços")
 	@RequestMapping(method = RequestMethod.GET)
@@ -52,22 +55,20 @@ public class EspacoResouce {
 		return ResponseEntity.created(uri).build();
 	}
 
-/*
+
 	//Marcar espaco como especial
-	@RequestMapping(path = "/espacoUp", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateEspaco(@RequestBody Espaco obj) {
-
-	    obj = service.buscar(obj.getIdEspaco());
-
-		if(obj == null)
-			return ResponseEntity.notFound().build();
-
-		service.insert(obj);
-
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> updateEspaco(@PathVariable Integer id) {
+		
+		Espaco obj=service.buscar(id);
+		obj.setEspacoEsopecial(true);
+	    obj = service.update(obj);
 		return ResponseEntity.noContent().build();
+	
 
 	}
 
+	/*
 	//Fazendo update com POST
 	@RequestMapping(path = {"/id"}, method = RequestMethod.POST)
 	public ResponseEntity<Void> updateEspaco(@RequestBody EspacoDTO objDto, @PathVariable Integer id) {

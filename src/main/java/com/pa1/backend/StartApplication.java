@@ -30,7 +30,8 @@ public class StartApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		Espaco esp1 = new Espaco(null,"Lab 2","Laboratório de informática","Prédio de Informática",false,"Luiz Antônio",false);
 		Espaco esp2 = new Espaco(null,"Lab 3","Sala de estudos","Prédio de Informática",false,"Luiz Antônio",false);
-		
+		Espaco esp3 = new Espaco(null,"Auditório","Auditório do ensino médio da EAJ","Audtório possui caixa de som ...",true,"Luiz Antônio",false);
+
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
 		 Integer horarios[] = {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
@@ -39,10 +40,11 @@ public class StartApplication implements CommandLineRunner {
 		Reserva r2 = new Reserva(null,sdf.parse("20-09-2019"),horarios,"Laura",esp2);
 		
 		
+		
 		esp1.getReservas().addAll(Arrays.asList(r1));
 		esp2.getReservas().addAll(Arrays.asList(r2));
 		
-		espacoRepository.save(Arrays.asList(esp1,esp2));
+		espacoRepository.save(Arrays.asList(esp1,esp2,esp3));
 		reservaRepository.save(Arrays.asList(r1,r2));
 		
 	}

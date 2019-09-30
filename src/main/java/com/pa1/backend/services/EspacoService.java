@@ -26,8 +26,7 @@ public class EspacoService {
 	}
 
 	//mudar especial de espaco
-	public Espaco update(Espaco obj, Integer id) {
-		obj.setIdEspaco(id);
+	public Espaco update(Espaco obj) {
 		return repo.save(obj);
 	}
 
