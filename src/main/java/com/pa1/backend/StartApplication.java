@@ -8,8 +8,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.pa1.backend.domain.Administrador;
 import com.pa1.backend.domain.Espaco;
 import com.pa1.backend.domain.Reserva;
+import com.pa1.backend.repositories.AdministradorRepository;
 import com.pa1.backend.repositories.EspacoRepository;
 import com.pa1.backend.repositories.ReservaRepository;
 
@@ -20,6 +22,8 @@ public class StartApplication implements CommandLineRunner {
 	private EspacoRepository espacoRepository;
 	@Autowired
 	private ReservaRepository reservaRepository; 
+	@Autowired
+	private AdministradorRepository administradorRepository;
 	
 
 	public static void main(String[] args) {
@@ -46,6 +50,10 @@ public class StartApplication implements CommandLineRunner {
 		
 		espacoRepository.save(Arrays.asList(esp1,esp2,esp3));
 		reservaRepository.save(Arrays.asList(r1,r2));
+		
+		
+		Administrador adm1 =  new Administrador(null,"Luiz Fernando","luizFernando@gmail.com","998328988");
+		administradorRepository.save(adm1);
 		
 	}
 
