@@ -75,4 +75,13 @@ public class ReservaResouce {
 		return ResponseEntity.created(uri).build();
 	}
 
+	@ApiOperation("Cancelar Reserva de Terceiros")
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> deletarReserva(
+			@ApiParam("Id da Reserva")
+			@PathVariable Integer id
+	){
+		service.delete(id);
+		return ResponseEntity.noContent().build();
+	}
 }

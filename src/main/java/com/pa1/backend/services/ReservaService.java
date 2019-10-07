@@ -40,6 +40,11 @@ public class ReservaService {
 		return obj;
 	}
 
+	public void delete(Integer id){
+		Reserva obj = repo.findOne(id);
+		repo.delete(obj);
+	}
+
 	public Reserva insert(Reserva obj) {
 		obj.setIdReserva(null);
 		return repo.save(obj);

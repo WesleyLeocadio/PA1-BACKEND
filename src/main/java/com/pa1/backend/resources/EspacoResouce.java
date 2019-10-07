@@ -21,6 +21,7 @@ import com.pa1.backend.services.EspacoService;
 @RequestMapping(value = "/espacos") // vai responder por este endPoint
 public class EspacoResouce {
 
+
 	@Autowired
 	private EspacoService service;
 
