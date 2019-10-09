@@ -57,4 +57,13 @@ public class ReservaService {
 		
 	}
 
+	//Editar Reserva
+	public Reserva update(Reserva obj){
+		return  repo.save(obj);
+	}
+
+	public List<Reserva> findByReserva(Integer idEspaco, Date d){
+		return repo.findByReserva(idEspaco,d);
+	}
+
 }

@@ -84,4 +84,51 @@ public class ReservaResouce {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+
+	//Editar reserva
+	@ApiOperation("Editar Reserva")
+	@RequestMapping(path = {"/update"}, method = RequestMethod.PUT)
+	public ResponseEntity<Void> updateReserva(
+			@RequestParam Integer id,
+			@DateTimeFormat(pattern="dd-MM-yyyy")  Date dateInicio,
+			@DateTimeFormat(pattern="dd-MM-yyyy")  Date dataFim,
+			Integer[] horarios,
+			String responsavel,
+			Integer idEspaco
+			){
+
+		Reserva obj = service.buscar(id);
+		List<Reserva> list = service.findByReserva(id, dateInicio);
+
+		//EspacoService s = new EspacoService();
+
+		obj.setDataReservaInicio(dateInicio);
+		obj.setDataReservaFim(dataFim);
+		obj.setHorarios(horarios);
+		obj.setResponsavel(responsavel);
+		//obj.setEspaco(s.buscar(idEspaco));
+
+		service.update(obj);
+		return ResponseEntity.noContent().build();
+
+		/*if(list!=null){
+			int conflit = 0;
+			for(int i = 0; i<list.size(); i++){
+				if(list.get(i).getHorarios().equals(obj.getHorarios())){   conflit = 1;
+				}
+			}
+			if(conflit == 1){
+				return ResponseEntity.noContent().build();
+			}else{
+				obj.setDataReservaInicio(obj.getDataReservaInicio());
+				service.update(obj);
+				return ResponseEntity.noContent().build();
+			}
+		}else{
+			service.update(obj);
+			return ResponseEntity.noContent().build();
+		}*/
+
+	}
+
 }
