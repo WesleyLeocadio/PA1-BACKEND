@@ -38,7 +38,8 @@ public class WebConfiguration  extends WebSecurityConfigurerAdapter{
 	//
 	private static final String[] PUBLIC_MATCHERS_GET = {
 			"/espacos/**",
-			"/reservas/**"
+			"/reservas/**",
+			"/usuarios/**"
 	};
 	
 	//
