@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.pa1.backend.domain.Espaco;
+import com.pa1.backend.domain.Usuario;
 
 public class ReservaDTO  implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -12,7 +13,8 @@ public class ReservaDTO  implements Serializable{
 	private Date dataReservaInicio;
 	private Date dataReservaFim;
 	private Integer horarios[] = new Integer[16];
-	private String responsavel;
+	private Usuario usuario;
+	
 	private Espaco espaco;
 
 	public ReservaDTO() {
@@ -51,12 +53,14 @@ public class ReservaDTO  implements Serializable{
 		this.horarios = horarios;
 	}
 
-	public String getResponsavel() {
-		return responsavel;
+	
+
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setResponsavel(String responsavel) {
-		this.responsavel = responsavel;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public Espaco getEspaco() {

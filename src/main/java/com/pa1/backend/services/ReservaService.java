@@ -49,14 +49,13 @@ public class ReservaService {
 		obj.setIdReserva(null);
 		return repo.save(obj);
 	}
-	
+
 	public Reserva fromDTO(ReservaDTO objDto) {
-		Reserva r1 = new Reserva(null,objDto.getDataReservaInicio(), objDto.getDataReservaFim(),objDto.getHorarios(),
-				objDto.getResponsavel(),objDto.getEspaco());
+		Reserva r1 = new Reserva(null,objDto.getDataReservaInicio(), objDto.getDataReservaFim(),objDto.getHorarios(),objDto.getEspaco(),objDto.getUsuario());
 		return r1;
 		
+		
 	}
-
 	//Editar Reserva
 	public Reserva update(Reserva obj){
 		return  repo.save(obj);

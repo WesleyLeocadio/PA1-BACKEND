@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -22,22 +23,26 @@ public class Reserva implements Serializable{
 	private Date dataReservaInicio;
 	private Date dataReservaFim;
 	private Integer horarios[] = new Integer[16];
-	private String responsavel;
 	
     @JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name="espaco_id")
 	private Espaco espaco;
+    
+    @JsonManagedReference
+    @ManyToOne
+	@JoinColumn(name="usuario_id")
+	private Usuario usuario;
 	
 	public Reserva() {}
 
-	public Reserva(Integer idReserva, Date dataReservaInicio, Date dataReservaFim, Integer[] horarios, String responsavel, Espaco espaco) {
+	public Reserva(Integer idReserva, Date dataReservaInicio, Date dataReservaFim, Integer[] horarios, Espaco espaco, Usuario user) {
 		this.idReserva = idReserva;
 		this.dataReservaInicio = dataReservaInicio;
 		this.dataReservaFim = dataReservaFim;
 		this.horarios = horarios;
-		this.responsavel = responsavel;
 		this.espaco = espaco;
+		this.usuario=user;
 	}
 
 	public Date getDataReservaInicio() {
@@ -80,13 +85,6 @@ public class Reserva implements Serializable{
 		this.horarios = horarios;
 	}
 
-	public String getResponsavel() {
-		return responsavel;
-	}
-
-	public void setResponsavel(String responsavel) {
-		this.responsavel = responsavel;
-	}
 
 	public Espaco getEspaco() {
 		return espaco;
@@ -94,6 +92,16 @@ public class Reserva implements Serializable{
 
 	public void setEspaco(Espaco espaco) {
 		this.espaco = espaco;
+	}
+	
+	
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	@Override

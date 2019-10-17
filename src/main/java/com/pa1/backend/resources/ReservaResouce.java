@@ -17,7 +17,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.pa1.backend.domain.Espaco;
 import com.pa1.backend.domain.Reserva;
 import com.pa1.backend.dto.ReservaDTO;
-import com.pa1.backend.services.EspacoService;
 import com.pa1.backend.services.ReservaService;
 
 //classe vai ser um controlador REST
@@ -105,7 +104,7 @@ public class ReservaResouce {
 		obj.setDataReservaInicio(dateInicio);
 		obj.setDataReservaFim(dataFim);
 		obj.setHorarios(horarios);
-		obj.setResponsavel(responsavel);
+		//obj.setResponsavel(responsavel);
 		//obj.setEspaco(s.buscar(idEspaco));
 
 		service.update(obj);

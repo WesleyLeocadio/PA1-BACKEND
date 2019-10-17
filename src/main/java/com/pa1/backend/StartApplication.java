@@ -8,12 +8,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.pa1.backend.domain.Administrador;
 import com.pa1.backend.domain.Espaco;
 import com.pa1.backend.domain.Reserva;
-import com.pa1.backend.repositories.AdministradorRepository;
+import com.pa1.backend.domain.Usuario;
 import com.pa1.backend.repositories.EspacoRepository;
 import com.pa1.backend.repositories.ReservaRepository;
+import com.pa1.backend.repositories.UsuarioRepository;
 
 @SpringBootApplication
 public class StartApplication implements CommandLineRunner {
@@ -22,8 +22,10 @@ public class StartApplication implements CommandLineRunner {
 	private EspacoRepository espacoRepository;
 	@Autowired
 	private ReservaRepository reservaRepository; 
+	
 	@Autowired
-	private AdministradorRepository administradorRepository;
+	private UsuarioRepository usuarioRepository; 
+	
 	
 
 	public static void main(String[] args) {
@@ -32,6 +34,13 @@ public class StartApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		
+		Usuario user1 = new Usuario(null, "Luiz fernando","luizFermando@gmail.com","99928989",1,"admin");
+		Usuario user2 = new Usuario(null, "Laura Emmanuella","lauraEmmanuella@gmail.com","99928989",1,"laura");
+		Usuario user3 = new Usuario(null, "Weslley Leocadio","silvawesley@gmail.com","99928989",3,"wesley");
+		usuarioRepository.save(Arrays.asList(user1,user2,user3));
+		
+		
 		Espaco esp1 = new Espaco(null,"Lab 2","Laboratório de informática","Prédio de Informática",false,"Luiz Antônio",false);
 		Espaco esp2 = new Espaco(null,"Lab 3","Sala de estudos","Prédio de Informática",false,"Luiz Antônio",false);
 		Espaco esp3 = new Espaco(null,"Auditório","Auditório do ensino médio da EAJ","Audtório possui caixa de som ...",true,"Luiz Antônio",false);
@@ -40,8 +49,8 @@ public class StartApplication implements CommandLineRunner {
 
 		 Integer horarios[] = {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
-		Reserva r1 = new Reserva(null,sdf.parse("30-09-2019"),sdf.parse("30-10-2019"),horarios,"Taniro",esp1);
-		Reserva r2 = new Reserva(null,sdf.parse("20-09-2019"),sdf.parse("30-09-2019"),horarios,"Laura",esp2);
+		Reserva r1 = new Reserva(null,sdf.parse("30-09-2019"),sdf.parse("30-10-2019"),horarios,esp1,user1);
+		Reserva r2 = new Reserva(null,sdf.parse("20-09-2019"),sdf.parse("30-09-2019"),horarios,esp2,user2);
 		
 		
 		
@@ -52,8 +61,6 @@ public class StartApplication implements CommandLineRunner {
 		reservaRepository.save(Arrays.asList(r1,r2));
 		
 		
-		Administrador adm1 =  new Administrador(null,"Luiz Fernando","luizFernando@gmail.com","998328988");
-		administradorRepository.save(adm1);
 		
 	}
 
