@@ -1,5 +1,6 @@
 package com.pa1.backend.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -18,8 +19,10 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.core.env.Environment;
+import java.util.Arrays;
 
-import io.jsonwebtoken.lang.Arrays;
+
 
 import java.util.List;
 
@@ -28,7 +31,9 @@ import java.util.List;
 public class WebConfiguration  extends WebSecurityConfigurerAdapter{
   
 //Definir as configurações básicas das URL's que necessitam ou não de autenticação/autorização
-	
+
+	@Autowired
+    private Environment env;
 	
 	//quais caminhos são liberados
 	private static final String[] PUBLIC_MATCHERS = {
@@ -46,7 +51,9 @@ public class WebConfiguration  extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-	
+		if (Arrays.asList(env.getActiveProfiles()).contains("teste")) {
+            http.headers().frameOptions().disable();
+        }
 		//Para o  bean ser ativado
 		http.cors().and().csrf().disable();
 		//Todos os caminhos que tiver aqui pode ser acessado, caso contrário, exige a  autenticação
