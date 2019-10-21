@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.FallbackWebSecurityAutoConfiguration;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -68,11 +69,42 @@ public class ReservaResouce {
 			@ApiParam("Objeto de Reserva para salvar no Banco de dados")
 			@Valid @RequestBody ReservaDTO objDto ){
 		Reserva obj = service.fromDTO(objDto);
-		obj = service.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdReserva())
-				.toUri();
-		return ResponseEntity.created(uri).build();
+
+		//verificar data no espaco
+		if (!detectaColisao(obj)){
+			System.out.println("NÃO TEM");
+			obj = service.insert(obj);
+			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdReserva())
+					.toUri();
+			return ResponseEntity.created(uri).build();
+		}else{
+			System.out.println("JÁ TEM");
+			return ResponseEntity.noContent().build();
+		}
+
 	}
+
+	private boolean detectaColisao(Reserva obj){
+		//colisão
+		List<Reserva> list = service.findByReserva(obj.getEspaco().getIdEspaco(), obj.getDataReserva());
+
+		if (list.isEmpty()){
+			return false;
+		}else{
+			for(Reserva reserva:list){
+				for (int i = 0; i<reserva.getHorarios().length ;i++){
+					Integer horariosobj[] = obj.getHorarios();
+					Integer horariosReserva[] = reserva.getHorarios();
+					if(horariosobj[i]==1 && horariosReserva[i]==1){
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
+	}
+
 
 	@ApiOperation("Cancelar Reserva de Terceiros")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -85,6 +117,7 @@ public class ReservaResouce {
 	}
 
 	//Editar reserva
+	//muda data e horario
 	@ApiOperation("Editar Reserva")
 	@RequestMapping(path = {"/update"}, method = RequestMethod.PUT)
 	public ResponseEntity<Void> updateReserva(
