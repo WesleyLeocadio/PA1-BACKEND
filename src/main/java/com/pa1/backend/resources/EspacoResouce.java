@@ -51,7 +51,17 @@ public class EspacoResouce {
 			@ApiParam("Objeto de Espaço para salvar no Banco de dados")
 			@RequestBody EspacoDTO objDto) {
 		Espaco obj = service.fromDTO(objDto);
+		List<Espaco> list= service.findByLocalizacao(obj.getEspacoLocalizacao());
+
+		for(Espaco espaco: list){
+			System.out.println("Pesquisando");
+			if(espaco.getEspacoNome().equals(obj.getEspacoNome())){
+				System.out.println("++++++++++++++++Espaco já cadastrado");
+				return ResponseEntity.noContent().build();
+			}
+		}
 		obj = service.insert(obj);
+		System.out.println("Cadastrou o espaco");
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdEspaco()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
@@ -60,7 +70,7 @@ public class EspacoResouce {
 	//Marcar espaco como especial
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> updateEspaco(@PathVariable Integer id) {
-		
+
 		Espaco obj=service.buscar(id);
 		obj.setEspacoEsopecial(true);
 	    obj = service.update(obj);

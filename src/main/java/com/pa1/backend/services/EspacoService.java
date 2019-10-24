@@ -43,4 +43,9 @@ public class EspacoService {
 		return e;
 	}
 
+	//busca localizacao
+	public List<Espaco> findByLocalizacao(String local){
+		return repo.findByLocalizacao(local);
+	}
+
 }
