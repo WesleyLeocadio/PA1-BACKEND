@@ -3,6 +3,7 @@ package com.pa1.backend.services;
 import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.pa1.backend.domain.Usuario;
 import com.pa1.backend.dto.NewUsuarioDTO;
@@ -15,6 +16,10 @@ import java.util.List;
 
 @Service
 public class UsuarioService {
+	
+	@Autowired
+	private BCryptPasswordEncoder pe;
+
 	@Autowired // vai ser instanciado autmatico
 	private UsuarioRepository repo;
 
@@ -37,7 +42,7 @@ public class UsuarioService {
 			return obj;
 		}
 		public Usuario fromDTO(NewUsuarioDTO objDto) {
-			Usuario cli = new Usuario(null, objDto.getNome(), objDto.getEmail(), objDto.getTelefone(),objDto.getTipoUsuario(),objDto.getSenha());
+			Usuario cli = new Usuario(null, objDto.getNome(), objDto.getEmail(), objDto.getTelefone(),objDto.getTipoUsuario(),pe.encode(objDto.getSenha()));
 			return cli;
 		}
 

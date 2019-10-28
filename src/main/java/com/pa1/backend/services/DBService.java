@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.pa1.backend.domain.Espaco;
@@ -29,11 +30,13 @@ public class DBService {
 	@Autowired
 	private UsuarioRepository usuarioRepository; 
 	
+	@Autowired
+	private BCryptPasswordEncoder pe;
 	
 	public void instantiateTestDatabase() throws ParseException {
-		Usuario user1 = new Usuario(null, "Luiz fernando","luizFermando@gmail.com","99928989",1,"admin");
-		Usuario user2 = new Usuario(null, "Laura Emmanuella","lauraEmmanuella@gmail.com","99928989",1,"laura");
-		Usuario user3 = new Usuario(null, "Weslley Leocadio","silvawesley@gmail.com","99928989",3,"wesley");
+		Usuario user1 = new Usuario(null, "Luiz fernando","luizFermando@gmail.com","99928989",1,pe.encode("admin"));
+		Usuario user2 = new Usuario(null, "Laura Emmanuella","lauraEmmanuella@gmail.com","99928989",1,pe.encode("laura"));
+		Usuario user3 = new Usuario(null, "Weslley Leocadio","silvawesley@gmail.com","99928989",3,pe.encode("wesley"));
 		usuarioRepository.save(Arrays.asList(user1,user2,user3));
 		
 		
