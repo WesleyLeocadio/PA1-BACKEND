@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import com.pa1.backend.domain.Usuario;
+import com.pa1.backend.dto.NewUsuarioDTO;
 import com.pa1.backend.dto.UsuarioDTO;
 import com.pa1.backend.repositories.UsuarioRepository;
 
@@ -30,7 +31,15 @@ public class UsuarioService {
 			return repo.findAllTipo(3);
 		}
 
-
+		public Usuario insert(Usuario obj) {
+			obj.setIdUsuario(null);
+			obj = repo.save(obj);
+			return obj;
+		}
+		public Usuario fromDTO(NewUsuarioDTO objDto) {
+			Usuario cli = new Usuario(null, objDto.getNome(), objDto.getEmail(), objDto.getTelefone(),objDto.getTipoUsuario(),objDto.getSenha());
+			return cli;
+		}
 
 	// uma operacao q buscar um espaco por codigo
 	public Usuario buscar(Integer id) {
