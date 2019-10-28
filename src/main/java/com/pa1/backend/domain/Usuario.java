@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Usuario implements Serializable{
@@ -24,13 +25,14 @@ public class Usuario implements Serializable{
 	private String nome;
 	private String email;
     private String telefone;
+    //Usuario admin ==1  funcionario==2  comum ==3
     private Integer tipoUsuario;
     
     //para nao aparecer o BCrypt da senha
     @JsonIgnore
     private String senha;
 
-	@JsonBackReference
+	@JsonManagedReference
     @OneToMany(mappedBy = "usuario")
     private List<Reserva> reservas = new ArrayList<Reserva>();
     

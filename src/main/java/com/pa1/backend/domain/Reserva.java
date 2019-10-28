@@ -29,7 +29,7 @@ public class Reserva implements Serializable{
 	@JoinColumn(name="espaco_id")
 	private Espaco espaco;
     
-    @JsonManagedReference
+    @JsonBackReference
     @ManyToOne
 	@JoinColumn(name="usuario_id")
 	private Usuario usuario;
