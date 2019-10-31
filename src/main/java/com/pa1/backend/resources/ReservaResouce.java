@@ -84,9 +84,67 @@ public class ReservaResouce {
 
 	}
 
+	@ApiOperation("Cancelar Reserva de Terceiros")
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> deletarReserva(
+			@ApiParam("Id da Reserva")
+			@PathVariable Integer id
+	){
+		service.delete(id);
+		return ResponseEntity.noContent().build();
+	}
+
+	//Editar reserva
+	//muda data e horario
+	@ApiOperation("Editar Reserva")
+	@RequestMapping(path = {"/update"}, method = RequestMethod.PUT)
+	public ResponseEntity<Void> updateReserva(
+			@RequestParam Integer id,
+			@DateTimeFormat(pattern="dd-MM-yyyy")  Date dateInicio,
+			@DateTimeFormat(pattern="dd-MM-yyyy")  Date dataFim
+			) {
+
+		Reserva obj = service.buscar(id);
+
+		if (!detectaColisaoUpdate(obj, dateInicio)) {
+			obj.setDataReservaInicio(dateInicio);
+			obj.setDataReservaFim(dataFim);
+			service.update(obj);
+			System.out.println("Alterou a data");
+			return ResponseEntity.ok().build();
+
+		}else{
+			System.out.println("não alterou");
+			return  ResponseEntity.noContent().build();
+		}
+
+
+
+	}
 	private boolean detectaColisao(Reserva obj){
-		//colisão
+		//colisão de data fim igual final recorrente
 		List<Reserva> list = service.findByReserva(obj.getEspaco().getIdEspaco(), obj.getDataReserva());
+
+		if (list.isEmpty()){
+			return false;
+		}else{
+			for(Reserva reserva:list){
+				for (int i = 0; i<reserva.getHorarios().length ;i++){
+					Integer horariosobj[] = obj.getHorarios();
+					Integer horariosReserva[] = reserva.getHorarios();
+					if(horariosobj[i]==1 && horariosReserva[i]==1){
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+		
+	}
+
+	private boolean detectaColisaoUpdate(Reserva obj, Date data){
+		//colisão
+		List<Reserva> list = service.findByReserva(obj.getEspaco().getIdEspaco(), data);
 
 		if (list.isEmpty()){
 			return false;
@@ -106,61 +164,5 @@ public class ReservaResouce {
 	}
 
 
-	@ApiOperation("Cancelar Reserva de Terceiros")
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> deletarReserva(
-			@ApiParam("Id da Reserva")
-			@PathVariable Integer id
-	){
-		service.delete(id);
-		return ResponseEntity.noContent().build();
-	}
-
-	//Editar reserva
-	//muda data e horario
-	@ApiOperation("Editar Reserva")
-	@RequestMapping(path = {"/update"}, method = RequestMethod.PUT)
-	public ResponseEntity<Void> updateReserva(
-			@RequestParam Integer id,
-			@DateTimeFormat(pattern="dd-MM-yyyy")  Date dateInicio,
-			@DateTimeFormat(pattern="dd-MM-yyyy")  Date dataFim,
-			Integer[] horarios,
-			String responsavel,
-			Integer idEspaco
-			){
-
-		Reserva obj = service.buscar(id);
-		List<Reserva> list = service.findByReserva(id, dateInicio);
-
-		//EspacoService s = new EspacoService();
-
-		obj.setDataReservaInicio(dateInicio);
-		obj.setDataReservaFim(dataFim);
-		obj.setHorarios(horarios);
-		//obj.setResponsavel(responsavel);
-		//obj.setEspaco(s.buscar(idEspaco));
-
-		service.update(obj);
-		return ResponseEntity.noContent().build();
-
-		/*if(list!=null){
-			int conflit = 0;
-			for(int i = 0; i<list.size(); i++){
-				if(list.get(i).getHorarios().equals(obj.getHorarios())){   conflit = 1;
-				}
-			}
-			if(conflit == 1){
-				return ResponseEntity.noContent().build();
-			}else{
-				obj.setDataReservaInicio(obj.getDataReservaInicio());
-				service.update(obj);
-				return ResponseEntity.noContent().build();
-			}
-		}else{
-			service.update(obj);
-			return ResponseEntity.noContent().build();
-		}*/
-
-	}
 
 }

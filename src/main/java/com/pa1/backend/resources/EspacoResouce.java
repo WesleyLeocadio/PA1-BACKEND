@@ -33,8 +33,6 @@ public class EspacoResouce {
 		Espaco obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj);
 	}
-	
-
 
 
 	@ApiOperation("Listar todos os Espaços")
