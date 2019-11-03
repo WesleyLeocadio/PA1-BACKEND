@@ -49,7 +49,6 @@ public class WebConfiguration  extends WebSecurityConfigurerAdapter{
 	
 	//quais caminhos são liberados
 	private static final String[] PUBLIC_MATCHERS = {
-			"/h2-console/**",
 			"/swagger-ui.html/**"
 	};
 
