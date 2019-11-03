@@ -9,7 +9,6 @@ import javax.validation.Valid;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.FallbackWebSecurityAutoConfiguration;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +19,6 @@ import com.pa1.backend.domain.Reserva;
 import com.pa1.backend.dto.ReservaDTO;
 import com.pa1.backend.services.ReservaService;
 
-//classe vai ser um controlador REST
 @RestController
 @RequestMapping(value = "/reservas")
 public class ReservaResouce {
@@ -28,10 +26,10 @@ public class ReservaResouce {
 	@Autowired
 	private ReservaService service;
 
-	@ApiOperation("Buscar reserva pelo id")
+	@ApiOperation("Buscar Reserva pelo id")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> findById(
-			@ApiParam("Id do objeto cadastrado de Reserva")
+			@ApiParam("Id da Reserva")
 			@PathVariable Integer id) {
 		Reserva obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj);
@@ -57,7 +55,7 @@ public class ReservaResouce {
 	@ApiOperation("Listar Reservas pela data")
 	@RequestMapping(path = {"/date"},method = RequestMethod.GET)
 	public ResponseEntity<List<Reserva>> findByDate(
-			@ApiParam("Data")
+			@ApiParam("Data no formato dd-MM-yyyy")
 			@RequestParam @DateTimeFormat(pattern="dd-MM-yyyy")  Date date) {
 		List<Reserva> list= service.findByDate(date);
 		return ResponseEntity.ok().body(list);
@@ -66,7 +64,7 @@ public class ReservaResouce {
 	@ApiOperation("Cadastrar Reserva")
 	@RequestMapping(method = RequestMethod.POST)
 	public  ResponseEntity<Void> insertReserva(
-			@ApiParam("Objeto de Reserva para salvar no Banco de dados")
+			@ApiParam("Objeto de Reserva")
 			@Valid @RequestBody ReservaDTO objDto ){
 		Reserva obj = service.fromDTO(objDto);
 
@@ -94,13 +92,14 @@ public class ReservaResouce {
 		return ResponseEntity.noContent().build();
 	}
 
-	//Editar reserva
-	//muda data e horario
 	@ApiOperation("Editar Reserva")
 	@RequestMapping(path = {"/update"}, method = RequestMethod.PUT)
 	public ResponseEntity<Void> updateReserva(
+			@ApiParam("Id da Reserva")
 			@RequestParam Integer id,
+			@ApiParam("Data de início da Reserva no formato dd-MM-yyyy")
 			@DateTimeFormat(pattern="dd-MM-yyyy")  Date dateInicio,
+			@ApiParam("Data de fim da Reserva no formato dd-MM-yyyy")
 			@DateTimeFormat(pattern="dd-MM-yyyy")  Date dataFim
 			) {
 
@@ -118,9 +117,8 @@ public class ReservaResouce {
 			return  ResponseEntity.noContent().build();
 		}
 
-
-
 	}
+
 	private boolean detectaColisao(Reserva obj){
 		//colisão de data fim igual final recorrente
 		List<Reserva> list = service.findByReserva(obj.getEspaco().getIdEspaco(), obj.getDataReserva());
@@ -162,7 +160,5 @@ public class ReservaResouce {
 		}
 
 	}
-
-
 
 }
