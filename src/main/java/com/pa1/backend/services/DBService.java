@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.pa1.backend.domain.Espaco;
+import com.pa1.backend.domain.Perfil;
 import com.pa1.backend.domain.Reserva;
 import com.pa1.backend.domain.Usuario;
 import com.pa1.backend.repositories.EspacoRepository;
@@ -35,8 +36,9 @@ public class DBService {
 	
 	public void instantiateTestDatabase() throws ParseException {
 		Usuario user1 = new Usuario(null, "Luiz fernando","luizFermando@gmail.com","99928989",1,pe.encode("admin"));
-		Usuario user2 = new Usuario(null, "Laura Emmanuella","lauraEmmanuella@gmail.com","99928989",1,pe.encode("laura"));
+		Usuario user2 = new Usuario(null, "Laura Emmanuella","lauraEmmanuella@gmail.com","99928989",2,pe.encode("laura"));
 		Usuario user3 = new Usuario(null, "Weslley Leocadio","silvawesley@gmail.com","99928989",3,pe.encode("wesley"));
+
 		usuarioRepository.save(Arrays.asList(user1,user2,user3));
 		
 		

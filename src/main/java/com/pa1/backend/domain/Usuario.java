@@ -2,9 +2,15 @@ package com.pa1.backend.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,31 +21,32 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-public class Usuario implements Serializable{
+public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idUsuario;
 	private String nome;
 	private String email;
-    private String telefone;
-    //Usuario admin ==1  funcionario==2  comum ==3
-    private Integer tipoUsuario;
-    
-    //para nao aparecer o BCrypt da senha
-    @JsonIgnore
-    private String senha;
+	private String telefone;
+	// Usuario admin ==1 funcionario==2 comum ==3
+	private Integer tipoUsuario;
+
+	// para nao aparecer o BCrypt da senha
+	@JsonIgnore
+	private String senha;
 
 	@JsonManagedReference
-    @OneToMany(mappedBy = "usuario")
-    private List<Reserva> reservas = new ArrayList<Reserva>();
-    
-    
-    
-    
+	@OneToMany(mappedBy = "usuario")
+	private List<Reserva> reservas = new ArrayList<Reserva>();
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "PERFIS")
+	private Set<Integer> perfis = new HashSet<>();
+
 	public Usuario() {
+		addPerfil(Perfil.USUARIO);
 
 	}
 
@@ -51,10 +58,15 @@ public class Usuario implements Serializable{
 		this.telefone = telefone;
 		this.tipoUsuario = tipoUsuario;
 		this.senha = senha;
-		
+		if (tipoUsuario == 1) {
+			addPerfil(Perfil.ADMIN);
+		} else if (tipoUsuario == 2) {
+			addPerfil(Perfil.FUNCIONARIO);
+		} else {
+			addPerfil(Perfil.USUARIO);
+		}
 	}
 
-	
 	public Usuario(String nome, String email, String telefone, Integer tipoUsuario, String senha) {
 		super();
 		this.nome = nome;
@@ -112,7 +124,14 @@ public class Usuario implements Serializable{
 		this.senha = senha;
 	}
 
-	
+	public Set<Perfil> getPerfis() {
+		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+	}
+
+	public void addPerfil(Perfil perfil) {
+		perfis.add(perfil.getCod());
+	}
+
 	public List<Reserva> getReservas() {
 		return reservas;
 	}
@@ -145,9 +164,5 @@ public class Usuario implements Serializable{
 			return false;
 		return true;
 	}
-
-
-    
-
 
 }
