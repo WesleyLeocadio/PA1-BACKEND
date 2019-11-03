@@ -27,7 +27,7 @@ public class SwaggerConfig {
     private ApiInfo apiEndPointsInfo(){
         return new ApiInfoBuilder().title("API REST GEs")
                 .description("API REST para Gerenciamento de Espaços\n" +
-                        "\n**Developers:**\n"
+                        "\n**Developers:**"
                                 + "* Ana Bheatriz Chacon - https://github.com/BiaChacon\n" +
                                 "* Weslley Leocadio - https://github.com/WesleyLeocadio\n" +
                                 "* João Paulo - https://github.com/ashouy\n" +
