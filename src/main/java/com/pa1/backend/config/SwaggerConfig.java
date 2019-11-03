@@ -27,20 +27,11 @@ public class SwaggerConfig {
     private ApiInfo apiEndPointsInfo(){
         return new ApiInfoBuilder().title("API REST GEs")
                 .description("API REST para Gerenciamento de Espaços\n" +
-                        "Developers:"
-                                +(new Contact("Ana Bheatriz Chacon",
-                                "https://github.com/BiaChacon",
-                                "anabheatrizchacon@outlook.com"))
-                                +(new Contact("Weslley Leocadio",
-                                        "https://github.com/WesleyLeocadio",
-                                        "silvawesley374@gmail.com"))
-                                +(new Contact("João Paulo",
-                                        "https://github.com/ashouy",
-                                        "joaopaulokad@gmail.com"))
-                                +(new Contact("Thiago Dantas",
-                                        "https://github.com/thiagodantas90",
-                                        "thiagobd1990@gmail.com"))
-
+                        "\nDevelopers:\n"
+                                + "Ana Bheatriz Chacon - https://github.com/BiaChacon\n" +
+                                "Weslley Leocadio - https://github.com/WesleyLeocadio\n" +
+                                "João Paulo - https://github.com/ashouy\n" +
+                                "Thiago Dantas - https://github.com/thiagodantas90\n"
                         )
                 .license("Apache License Version 2.0")
                 .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0")
