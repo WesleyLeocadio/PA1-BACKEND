@@ -49,7 +49,6 @@ public class WebConfiguration  extends WebSecurityConfigurerAdapter{
 	
 	//quais caminhos são liberados
 	private static final String[] PUBLIC_MATCHERS = {
-			"/swagger-ui.html/**",
 			"/**"
 	};
 
@@ -75,7 +74,7 @@ public class WebConfiguration  extends WebSecurityConfigurerAdapter{
 			.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_GET).permitAll()
 			.antMatchers(HttpMethod.PUT, PUBLIC_MATCHERS_GET).permitAll()
 			.antMatchers(HttpMethod.DELETE, PUBLIC_MATCHERS_GET).permitAll()
-			.antMatchers(PUBLIC_MATCHERS).permitAll()
+			.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS).permitAll()
 			.anyRequest().authenticated();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
