@@ -16,6 +16,7 @@ import javassist.tools.rmi.ObjectNotFoundException;
 
 @Service
 public class ReservaService {
+
 	@Autowired //vai ser instanciado autmatico
 	private ReservaRepository repo;
 
@@ -51,14 +52,25 @@ public class ReservaService {
 	}
 
 	public Reserva fromDTO(ReservaDTO objDto) {
-		Reserva r1 = new Reserva(null,objDto.getDataReservaInicio(), objDto.getDataReservaFim(),objDto.getHorarios(),objDto.getEspaco(),objDto.getUsuario());
+		Reserva r1 = new Reserva(null,objDto.getDataReservaInicio(), objDto.getDataReservaFim(),objDto.getHorarios(),objDto.getEspaco(),objDto.getUsuario(), objDto.getAprovada());
 		return r1;
 		
 		
 	}
+
 	//Editar Reserva
 	public Reserva update(Reserva obj){
 		return  repo.save(obj);
+	}
+
+	//Listar reservas de aprovadas
+	public List<Reserva> findByAprovadas(){
+		return repo.findByAprovadas();
+	}
+
+	//Listar reservas de pendentes
+	public List<Reserva> findByPendentes(){
+		return repo.findByPendentes();
 	}
 
 	public List<Reserva> findByReserva(Integer idEspaco, Date d){

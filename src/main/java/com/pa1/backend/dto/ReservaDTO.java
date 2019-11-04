@@ -14,11 +14,30 @@ public class ReservaDTO  implements Serializable{
 	private Date dataReservaFim;
 	private Integer horarios[] = new Integer[16];
 	private Usuario usuario;
+	private Boolean aprovada;
 	
 	private Espaco espaco;
 
 	public ReservaDTO() {
 		
+	}
+
+	public ReservaDTO(Integer id, Date dataReservaInicio, Date dataReservaFim, Integer[] horarios, Espaco espaco, Usuario usuario,Boolean aprovada) {
+		this.id = id;
+		this.dataReservaInicio = dataReservaInicio;
+		this.dataReservaFim = dataReservaFim;
+		this.horarios = horarios;
+		this.aprovada = aprovada;
+		this.usuario = usuario;
+		this.espaco = espaco;
+	}
+
+	public Boolean getAprovada() {
+		return aprovada;
+	}
+
+	public void setAprovada(Boolean aprovada) {
+		this.aprovada = aprovada;
 	}
 
 	public Integer getId() {
@@ -52,8 +71,6 @@ public class ReservaDTO  implements Serializable{
 	public void setHorarios(Integer[] horarios) {
 		this.horarios = horarios;
 	}
-
-	
 
 	public Usuario getUsuario() {
 		return usuario;

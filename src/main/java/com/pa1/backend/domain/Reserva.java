@@ -23,6 +23,7 @@ public class Reserva implements Serializable{
 	private Date dataReservaInicio;
 	private Date dataReservaFim;
 	private Integer horarios[] = new Integer[16];
+	private Boolean aprovada;
 	
     @JsonManagedReference
 	@ManyToOne
@@ -36,13 +37,22 @@ public class Reserva implements Serializable{
 	
 	public Reserva() {}
 
-	public Reserva(Integer idReserva, Date dataReservaInicio, Date dataReservaFim, Integer[] horarios, Espaco espaco, Usuario user) {
+	public Reserva(Integer idReserva, Date dataReservaInicio, Date dataReservaFim, Integer[] horarios, Espaco espaco, Usuario user, Boolean aprovada) {
 		this.idReserva = idReserva;
 		this.dataReservaInicio = dataReservaInicio;
 		this.dataReservaFim = dataReservaFim;
 		this.horarios = horarios;
 		this.espaco = espaco;
 		this.usuario=user;
+		this.aprovada=aprovada;
+	}
+
+	public Boolean getAprovada() {
+		return aprovada;
+	}
+
+	public void setAprovada(Boolean aprovada) {
+		this.aprovada = aprovada;
 	}
 
 	public Date getDataReservaInicio() {

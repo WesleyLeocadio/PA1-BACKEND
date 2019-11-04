@@ -92,6 +92,32 @@ public class ReservaResouce {
 		return ResponseEntity.noContent().build();
 	}
 
+	@ApiOperation("Listar Reservas Aprovadas")
+	@RequestMapping(path = {"/aprovadas"},method = RequestMethod.GET)
+	public ResponseEntity<List<Reserva>> findByAprovadas(){
+		List<Reserva> list= service.findByAprovadas();
+		return ResponseEntity.ok().body(list);
+	}
+
+	@ApiOperation("Listar Reservas Pendentes")
+	@RequestMapping(path = {"/pendentes"},method = RequestMethod.GET)
+	public ResponseEntity<List<Reserva>> findByPendentes(){
+		List<Reserva> list= service.findByPendentes();
+		return ResponseEntity.ok().body(list);
+	}
+
+	@ApiOperation("Aprovar Reserva")
+	@RequestMapping(path = {"/aprovar"}, method = RequestMethod.PUT)
+	public ResponseEntity<Void> aprovarReserva(
+			@ApiParam("Id da Reserva")
+			@RequestParam Integer id
+	){
+		Reserva obj = service.buscar(id);
+		obj.setAprovada(true);
+		service.update(obj);
+		return ResponseEntity.ok().build();
+	}
+
 	@ApiOperation("Editar Reserva")
 	@RequestMapping(path = {"/update"}, method = RequestMethod.PUT)
 	public ResponseEntity<Void> updateReserva(
