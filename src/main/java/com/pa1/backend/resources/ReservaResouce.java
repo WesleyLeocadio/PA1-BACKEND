@@ -1,6 +1,10 @@
 package com.pa1.backend.resources;
 
 import java.net.URI;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -130,8 +134,8 @@ public class ReservaResouce {
 			) {
 
 		Reserva obj = service.buscar(id);
-
-		if (!detectaColisaoUpdate(obj, dateInicio)) {
+		obj.setDataReservaInicio(dateInicio);
+		if (!detectaColisao(obj)) {
 			obj.setDataReservaInicio(dateInicio);
 			obj.setDataReservaFim(dataFim);
 			service.update(obj);
@@ -146,9 +150,31 @@ public class ReservaResouce {
 	}
 
 	private boolean detectaColisao(Reserva obj){
-		//colisão de data fim igual final recorrente
-		List<Reserva> list = service.findByReserva(obj.getEspaco().getIdEspaco(), obj.getDataReserva());
 
+		List<Date> todasDatas = determinardatas(obj.getDataReservaInicio(), obj.getDataReservaFim());
+
+		for(int i =0; i<todasDatas.size();i++){
+			System.out.println("testando");
+			List<Reserva> list = service.findByReserva(obj.getEspaco().getIdEspaco(), todasDatas.get(i));
+
+			if (list.isEmpty()){
+				return false;
+			}else{
+				for(Reserva reserva:list){
+					System.out.println("verificando horarios");
+					for (int j = 0; j<reserva.getHorarios().length ;j++){
+						Integer horariosobj[] = obj.getHorarios();
+						Integer horariosReserva[] = reserva.getHorarios();
+						if(horariosobj[j]==1 && horariosReserva[j]==1){
+							return true;
+						}
+					}
+				}
+				return false;
+			}
+		}
+	/*
+		List<Reserva> list = service.findByReserva(obj.getEspaco().getIdEspaco(), obj.getDataReserva());
 		if (list.isEmpty()){
 			return false;
 		}else{
@@ -162,29 +188,30 @@ public class ReservaResouce {
 				}
 			}
 			return false;
-		}
-		
+		}*/
+		return false;
 	}
 
-	private boolean detectaColisaoUpdate(Reserva obj, Date data){
-		//colisão
-		List<Reserva> list = service.findByReserva(obj.getEspaco().getIdEspaco(), data);
-
-		if (list.isEmpty()){
-			return false;
-		}else{
-			for(Reserva reserva:list){
-				for (int i = 0; i<reserva.getHorarios().length ;i++){
-					Integer horariosobj[] = obj.getHorarios();
-					Integer horariosReserva[] = reserva.getHorarios();
-					if(horariosobj[i]==1 && horariosReserva[i]==1){
-						return true;
-					}
-				}
+	private List determinardatas(Date inicio, Date fim){
+		System.out.println("criando datas");
+		List<Date> listaDatas = null;
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		Date dt1 = null;
+		try {
+			dt1 = df.parse (inicio.toString());
+			Date dt2 = df.parse (fim.toString());
+			Calendar cal = Calendar.getInstance();
+			cal.setTime (dt1);
+			for (Date dt = dt1; dt.compareTo (dt2) <= 0; ) {
+				System.out.println (df.format (dt));
+				cal.add (Calendar.DATE, +1);
+				dt = cal.getTime();
+				listaDatas.add(dt);
 			}
-			return false;
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
-
+		return listaDatas;
 	}
 
 }
