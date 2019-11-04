@@ -52,13 +52,17 @@ public class WebConfiguration  extends WebSecurityConfigurerAdapter{
 			"/**"
 	};
 
+	private static final String[] PUBLIC_MATCHERS_H2 = {
+			"/h2-console/**"
+	};
+
 	//
 	private static final String[] PUBLIC_MATCHERS_GET = {
 			"/espacos/**",
 			"/reservas/**",
 			"/usuarios/**"
 	};
-	
+
 	//
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -75,6 +79,7 @@ public class WebConfiguration  extends WebSecurityConfigurerAdapter{
 			.antMatchers(HttpMethod.PUT, PUBLIC_MATCHERS_GET).permitAll()
 			.antMatchers(HttpMethod.DELETE, PUBLIC_MATCHERS_GET).permitAll()
 			.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS).permitAll()
+			.antMatchers(PUBLIC_MATCHERS_H2).permitAll()
 			.anyRequest().authenticated();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
