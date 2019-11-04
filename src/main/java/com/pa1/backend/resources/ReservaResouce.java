@@ -124,9 +124,9 @@ public class ReservaResouce {
             @ApiParam("Id da Reserva")
             @RequestParam Integer id,
             @ApiParam("Data de início da Reserva no formato dd-MM-yyyy")
-            @DateTimeFormat(pattern="dd-MM-yyyy")  Date dateInicio,
+            @DateTimeFormat(pattern="ddMMyyyy")  Date dateInicio,
             @ApiParam("Data de fim da Reserva no formato dd-MM-yyyy")
-            @DateTimeFormat(pattern="dd-MM-yyyy")  Date dataFim
+            @DateTimeFormat(pattern="ddMMyyyy")  Date dataFim
     ) {
 
         Reserva obj = service.buscar(id);
