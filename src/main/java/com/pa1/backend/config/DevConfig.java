@@ -11,7 +11,6 @@ import com.pa1.backend.services.DBService;
 import java.text.ParseException;
 
 @Configuration
-@Profile("dev")
 public class DevConfig {
 	@Autowired
 	private DBService dbService;
