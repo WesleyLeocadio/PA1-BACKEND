@@ -4,6 +4,7 @@ import java.net.URI;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -71,11 +72,16 @@ public class ReservaResouce {
             @ApiParam("Objeto de Reserva")
             @Valid @RequestBody ReservaDTO objDto ){
         Reserva obj = service.fromDTO(objDto);
-
-        //verificar data no espaco
-        if (!detectaColisao(obj)){
-            System.out.println("NÃO TEM");
-            obj = service.insert(obj);
+        //gera o intervalo de datas inicio até fim, se igual gera apenas uma data
+        List<Date> todasDatas = determinarDatas(obj.getDataReservaInicio(), obj.getDataReservaFim());
+        if (!detectaColisao(obj, todasDatas)){
+            //se a data fim for maior do que a darta inicio o for roda todas as datas criando uma reserva para cada dia do intervalo
+            for(int i = 0; i<todasDatas.size(); i++){
+                System.out.println("NÃO TEM");
+                obj.setDataReservaInicio(todasDatas.get(i));
+                obj.setDataReservaFim(todasDatas.get(i));
+                obj = service.insert(obj);
+            }
             URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdReserva())
                     .toUri();
             return ResponseEntity.created(uri).build();
@@ -83,7 +89,6 @@ public class ReservaResouce {
             System.out.println("JÁ TEM");
             return ResponseEntity.noContent().build();
         }
-
     }
 
     @ApiOperation("Cancelar Reserva de Terceiros")
@@ -134,14 +139,19 @@ public class ReservaResouce {
     ) {
 
         Reserva obj = service.buscar(id);
-        obj.setDataReservaInicio(dateInicio);
-        if (!detectaColisao(obj)) {
-            obj.setDataReservaInicio(dateInicio);
-            obj.setDataReservaFim(dataFim);
-            service.update(obj);
-            System.out.println("Alterou a data");
+        //gera o intervalo de datas
+        //só está funcionando para uma data, se igual gera apenas uma data
+        List<Date> todasDatas = determinarDatas(dateInicio, dataFim);
+        if (!detectaColisao(obj, todasDatas)) {
+            //sujeitao: caso não haja colisão deletar as reservas anteriores - crir algum medoto - sujeitao
+            //alterar a data da reserva de acordo com o intervalo de datas, só está funcinando quando a inicio é igual a data fim.
+            for (int i =0 ; i<todasDatas.size();i++){
+                obj.setDataReservaInicio(todasDatas.get(i));
+                obj.setDataReservaFim(todasDatas.get(i));
+                service.update(obj);
+                System.out.println("Alterou a data");
+            }
             return ResponseEntity.ok().build();
-
         }else{
             System.out.println("não alterou");
             return  ResponseEntity.noContent().build();
@@ -149,67 +159,42 @@ public class ReservaResouce {
 
     }
 
-    private boolean detectaColisao(Reserva obj){
-
-        List<Date> todasDatas = determinardatas(obj.getDataReservaInicio(), obj.getDataReservaFim());
-
-        for(int i =0; i<todasDatas.size();i++){
-            System.out.println("testando");
+    private boolean detectaColisao(Reserva obj, List<Date> todasDatas){
+        //List<Date> todasDatas = determinarDatas(obj.getDataReservaInicio(), obj.getDataReservaFim());
+        for (int i=0; i < todasDatas.size(); i++) {
+            System.out.println("testando colisao");
             List<Reserva> list = service.findByReserva(obj.getEspaco().getIdEspaco(), todasDatas.get(i));
-
-            if (list.isEmpty()){
+            if (list.isEmpty()) {
                 return false;
-            }else{
-                for(Reserva reserva:list){
+            } else {
+                for (Reserva reserva : list) {
                     System.out.println("verificando horarios");
-                    for (int j = 0; j<reserva.getHorarios().length ;j++){
+                    for (int j = 0; j < reserva.getHorarios().length; j++) {
                         Integer horariosobj[] = obj.getHorarios();
                         Integer horariosReserva[] = reserva.getHorarios();
-                        if(horariosobj[j]==1 && horariosReserva[j]==1){
+                        if (horariosobj[j] == 1 && horariosReserva[j] == 1) {
                             return true;
                         }
                     }
                 }
-                return false;
             }
         }
-	/*
-		List<Reserva> list = service.findByReserva(obj.getEspaco().getIdEspaco(), obj.getDataReserva());
-		if (list.isEmpty()){
-			return false;
-		}else{
-			for(Reserva reserva:list){
-				for (int i = 0; i<reserva.getHorarios().length ;i++){
-					Integer horariosobj[] = obj.getHorarios();
-					Integer horariosReserva[] = reserva.getHorarios();
-					if(horariosobj[i]==1 && horariosReserva[i]==1){
-						return true;
-					}
-				}
-			}
-			return false;
-		}*/
         return false;
     }
 
-    private List determinardatas(Date inicio, Date fim){
-        System.out.println("criando datas");
-        List<Date> listaDatas = null;
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        Date dt1 = null;
-        try {
-            dt1 = df.parse (inicio.toString());
-            Date dt2 = df.parse (fim.toString());
-            Calendar cal = Calendar.getInstance();
-            cal.setTime (dt1);
-            for (Date dt = dt1; dt.compareTo (dt2) <= 0; ) {
-                System.out.println (df.format (dt));
-                cal.add (Calendar.DATE, +1);
-                dt = cal.getTime();
-                listaDatas.add(dt);
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
+    private List determinarDatas(Date inicio, Date fim){
+        List<Date> listaDatas = new ArrayList<Date>();
+        DateFormat df = new SimpleDateFormat ("dd-MM-yyyy");
+        Date dt1 = inicio;
+        Date dt2 = fim;
+        Calendar cal = Calendar.getInstance();
+        cal.setTime (dt1);
+        Date dt;
+        for (dt = dt1; dt.compareTo (dt2) <= 0; ) {
+            listaDatas.add(dt);
+            System.out.println (df.format (dt));
+            cal.add (Calendar.DATE, +1);
+            dt = cal.getTime();
         }
         return listaDatas;
     }
