@@ -26,7 +26,7 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
     @Query(value = "SELECT * FROM RESERVA WHERE APROVADA = TRUE ", nativeQuery = true)
     List<Reserva> findByAprovadas();
 
-    @Query(value = "SELECT * FROM RESERVA WHERE APROVADA = FALSE", nativeQuery = true)
+    @Query(value = "SELECT * FROM RESERVA WHERE APROVADA = FALSE AND CANCELADA = FALSE ", nativeQuery = true)
     List<Reserva> findByPendentes();
 
 }

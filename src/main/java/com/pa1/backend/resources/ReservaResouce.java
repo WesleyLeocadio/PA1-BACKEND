@@ -91,14 +91,16 @@ public class ReservaResouce {
         }
     }
 
-    @ApiOperation("Cancelar Reserva de Terceiros")
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @ApiOperation("Cancelar Reserva")
+    @RequestMapping(path = {"/cancelar"}, method = RequestMethod.PUT)
     public ResponseEntity<Void> deletarReserva(
             @ApiParam("Id da Reserva")
-            @PathVariable Integer id
+            @RequestParam Integer id
     ){
-        service.delete(id);
-        return ResponseEntity.noContent().build();
+        Reserva obj = service.buscar(id);
+        obj.setCancelada(true);
+        service.update(obj);
+        return ResponseEntity.ok().build();
     }
 
     @ApiOperation("Listar Reservas Aprovadas")
@@ -133,7 +135,7 @@ public class ReservaResouce {
             @ApiParam("Id da Reserva")
             @RequestParam Integer id,
             @ApiParam("Data de início da Reserva no formato dd-MM-yyyy")
-            @DateTimeFormat(pattern="dd-MM-yyyy")  Date dateInicio,
+            @DateTimeFormat(pattern="dd-MM-yyyy")  Date dataInicio,
             @ApiParam("Data de fim da Reserva no formato dd-MM-yyyy")
             @DateTimeFormat(pattern="dd-MM-yyyy")  Date dataFim
     ) {
@@ -141,7 +143,7 @@ public class ReservaResouce {
         Reserva obj = service.buscar(id);
         //gera o intervalo de datas
         //só está funcionando para uma data, se igual gera apenas uma data
-        List<Date> todasDatas = determinarDatas(dateInicio, dataFim);
+        List<Date> todasDatas = determinarDatas(dataInicio, dataFim);
         if (!detectaColisao(obj, todasDatas)) {
             //sujeitao: caso não haja colisão deletar as reservas anteriores - crir algum medoto - sujeitao
             //alterar a data da reserva de acordo com o intervalo de datas, só está funcinando quando a inicio é igual a data fim.
@@ -160,7 +162,6 @@ public class ReservaResouce {
     }
 
     private boolean detectaColisao(Reserva obj, List<Date> todasDatas){
-        //List<Date> todasDatas = determinarDatas(obj.getDataReservaInicio(), obj.getDataReservaFim());
         for (int i=0; i < todasDatas.size(); i++) {
             System.out.println("testando colisao");
             List<Reserva> list = service.findByReserva(obj.getEspaco().getIdEspaco(), todasDatas.get(i));
