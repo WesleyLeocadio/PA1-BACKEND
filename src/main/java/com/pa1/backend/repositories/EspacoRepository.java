@@ -19,4 +19,5 @@ public interface EspacoRepository extends JpaRepository<Espaco, Integer> {
 
     @Query(value = "SELECT * FROM ESPACO WHERE ESPACO_DESABILITADO = TRUE", nativeQuery = true)
     List<Espaco> findByDesabilitado();
+
 }

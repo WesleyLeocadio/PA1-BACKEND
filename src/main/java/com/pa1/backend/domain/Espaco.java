@@ -1,20 +1,20 @@
 package com.pa1.backend.domain;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-//implementando a interface serializable( os objetos sao convertidos em uma sequencia de bytes) pra ser gravados em arquivos, trafegar em rede...
 @Entity
 public class Espaco implements Serializable {
+
 	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idEspaco;
@@ -28,9 +28,10 @@ public class Espaco implements Serializable {
 	@JsonBackReference
     @OneToMany(mappedBy = "espaco")
     private List<Reserva> reservas = new ArrayList<>();
-   
-    
-    public Espaco() {}
+
+    public Espaco() {
+
+	}
 
 	public Espaco(Integer idEspaco, String espacoNome, String espacoDescricao, String espacoLocalizacao,
 			boolean espacoEspecial, String espacoResponsavel, boolean espacoDesabilitado) {
@@ -42,18 +43,6 @@ public class Espaco implements Serializable {
 		this.espacoEspecial = espacoEspecial;
 		this.espacoResponsavel = espacoResponsavel;
 		this.espacoDesabilitado = espacoDesabilitado;
-	}
-
-	public Espaco(String espacoNome, String espacoDescricao, String espacoLocalizacao, boolean espacoEspecial,
-			String espacoResponsavel, boolean espacoDesabilitado, List<Reserva> reservas) {
-		super();
-		this.espacoNome = espacoNome;
-		this.espacoDescricao = espacoDescricao;
-		this.espacoLocalizacao = espacoLocalizacao;
-		this.espacoEspecial = espacoEspecial;
-		this.espacoResponsavel = espacoResponsavel;
-		this.espacoDesabilitado = espacoDesabilitado;
-		this.reservas = reservas;
 	}
 
 	public Integer getIdEspaco() {
@@ -112,8 +101,6 @@ public class Espaco implements Serializable {
 		this.espacoDesabilitado = espacoDesabilitado;
 	}
 
-	
-	
 	public List<Reserva> getReservas() {
 		return reservas;
 	}
@@ -154,10 +141,5 @@ public class Espaco implements Serializable {
 			return false;
 		return true;
 	}
-
-	
-    //Para que os objetos seram comparados pelos seus conteudos (nao pelos ponteiros de memoria) tem que implementar os metodos hash e equals
-	
-    
 
 }

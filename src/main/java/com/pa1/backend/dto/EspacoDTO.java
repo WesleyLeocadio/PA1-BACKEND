@@ -3,6 +3,7 @@ package com.pa1.backend.dto;
 import java.io.Serializable;
 
 public class EspacoDTO implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     private String espacoNome;

@@ -11,10 +11,35 @@ import java.util.List;
 
 @Service
 public class EspacoService {
-	@Autowired //vai ser instanciado autmatico
+
+	@Autowired
 	private EspacoRepository repo;
 
-	//listar espacos
+	public Espaco fromDTO(EspacoDTO objDto) {
+		Espaco e = new Espaco(null,
+				objDto.getEspacoNome(),
+				objDto.getEspacoDescricao(),
+				objDto.getEspacoLocalizacao(),
+				objDto.isEspacoEspecial(),
+				objDto.getEspacoResponsavel(),
+				objDto.isEspacoDesabilitado()
+		);
+		return e;
+	}
+	public Espaco insert(Espaco obj) {
+		obj.setIdEspaco(null);
+		return repo.save(obj);
+	}
+
+	public Espaco update(Espaco obj) {
+		return repo.save(obj);
+	}
+
+	public Espaco buscar(Integer id) {
+		Espaco obj = repo.findOne(id);
+		return obj;
+	}
+
 	public List<Espaco> findAll() {
 		return repo.findAll();
 	}
@@ -27,31 +52,6 @@ public class EspacoService {
 		return repo.findByDesabilitado();
 	}
 
-	//uma operacao q buscar um  espaco por codigo
-	public Espaco buscar(Integer id) {
-		Espaco obj = repo.findOne(id);
-		return obj;
-	}
-
-	//mudar especial de espaco
-	public Espaco update(Espaco obj) {
-		return repo.save(obj);
-	}
-
-	//cadastrar espaco
-	public Espaco insert(Espaco obj) {
-		obj.setIdEspaco(null);
-		return repo.save(obj);
-	}
-
-	//Obj DTO de Espaco
-	public Espaco fromDTO(EspacoDTO objDto) {
-		Espaco e = new Espaco(null,objDto.getEspacoNome(),objDto.getEspacoDescricao(),
-				objDto.getEspacoLocalizacao(),objDto.isEspacoEspecial(),objDto.getEspacoResponsavel(),objDto.isEspacoDesabilitado());
-		return e;
-	}
-
-	//busca localizacao
 	public List<Espaco> findByLocalizacao(String local){
 		return repo.findByLocalizacao(local);
 	}
