@@ -38,6 +38,20 @@ public class EspacoResouce {
 		return ResponseEntity.ok().body(list);
 	}
 
+	@ApiOperation("Listar todos os Espaços Habilitados")
+	@RequestMapping(path = {"/habilitados"}, method = RequestMethod.GET)
+	public ResponseEntity<List<Espaco>> findByHabilitado() {
+		List<Espaco> list= service.findByHabilitado();
+		return ResponseEntity.ok().body(list);
+	}
+
+	@ApiOperation("Listar todos os Espaços Desabilitados")
+	@RequestMapping(path = {"/desabilitados"}, method = RequestMethod.GET)
+	public ResponseEntity<List<Espaco>> findByDesabilitado() {
+		List<Espaco> list= service.findByDesabilitado();
+		return ResponseEntity.ok().body(list);
+	}
+
 	@ApiOperation("Cadastrar um Espaço")
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insertEspaco(
@@ -60,13 +74,38 @@ public class EspacoResouce {
 	}
 
 	@ApiOperation("Marcar espaço como especial")
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> updateEspaco(
-			@ApiParam("Id do Espaço")
-			@PathVariable Integer id) {
+	@RequestMapping(path = {"/especial"}, method = RequestMethod.PUT)
+	public ResponseEntity<Void> especialEspaco(
+			@ApiParam("Id da Reserva")
+			@RequestParam Integer id
+	){
 		Espaco obj=service.buscar(id);
 		obj.setEspacoEsopecial(true);
-	    obj = service.update(obj);
+	    service.update(obj);
+		return ResponseEntity.noContent().build();
+	}
+
+	@ApiOperation("Desabilitar espaço")
+	@RequestMapping(path = {"/desabilitar"}, method = RequestMethod.PUT)
+	public ResponseEntity<Void> desabilitarEspaco(
+			@ApiParam("Id da Reserva")
+			@RequestParam Integer id
+	){
+		Espaco obj=service.buscar(id);
+		obj.setEspacoDesabilitado(true);
+		service.update(obj);
+		return ResponseEntity.noContent().build();
+	}
+
+	@ApiOperation("Habilitar espaço")
+	@RequestMapping(path = {"/habilitar"}, method = RequestMethod.PUT)
+	public ResponseEntity<Void> habilitarEspaco(
+			@ApiParam("Id da Reserva")
+			@RequestParam Integer id
+	){
+		Espaco obj=service.buscar(id);
+		obj.setEspacoDesabilitado(false);
+		service.update(obj);
 		return ResponseEntity.noContent().build();
 	}
 

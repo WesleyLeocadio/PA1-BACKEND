@@ -19,6 +19,14 @@ public class EspacoService {
 		return repo.findAll();
 	}
 
+	public List<Espaco> findByHabilitado() {
+		return repo.findByHabilitado();
+	}
+
+	public List<Espaco> findByDesabilitado() {
+		return repo.findByDesabilitado();
+	}
+
 	//uma operacao q buscar um  espaco por codigo
 	public Espaco buscar(Integer id) {
 		Espaco obj = repo.findOne(id);
