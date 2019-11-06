@@ -9,10 +9,7 @@ import org.springframework.stereotype.Service;
 import com.pa1.backend.domain.Espaco;
 import com.pa1.backend.domain.Reserva;
 import com.pa1.backend.dto.ReservaDTO;
-import com.pa1.backend.repositories.EspacoRepository;
 import com.pa1.backend.repositories.ReservaRepository;
-
-import javassist.tools.rmi.ObjectNotFoundException;
 
 @Service
 public class ReservaService {
@@ -20,30 +17,17 @@ public class ReservaService {
 	@Autowired
 	private ReservaRepository repo;
 
-	//Listar Reservas de uma data especifica
-	public List<Reserva> findByDate(Date d){
-		return repo.findByDate(d);
-	}
-
-	//Listar todas as reservas
-	public List<Reserva> findAll() {
-		return repo.findAll();
-	}
-
-	//Listar reservas de um Espaco especifico
-	public List<Reserva> findByEspaco(Espaco e){
-		return repo.findByEspaco(e);
-	}
-
-	//Buscar reserva pelo id
-	public Reserva buscar(Integer id) {
-		Reserva obj = repo.findOne(id);
-		return obj;
-	}
-
-	public void delete(Integer id){
-		Reserva obj = repo.findOne(id);
-		repo.delete(obj);
+	public Reserva fromDTO(ReservaDTO objDto) {
+		Reserva r1 = new Reserva(null,
+				objDto.getDataReservaInicio(),
+				objDto.getDataReservaFim(),
+				objDto.getHorarios(),
+				objDto.getEspaco(),
+				objDto.getUsuario(),
+				objDto.getAprovada(),
+				objDto.getCancelada()
+		);
+		return r1;
 	}
 
 	public Reserva insert(Reserva obj) {
@@ -51,22 +35,31 @@ public class ReservaService {
 		return repo.save(obj);
 	}
 
-	public Reserva fromDTO(ReservaDTO objDto) {
-		Reserva r1 = new Reserva(null,objDto.getDataReservaInicio(), objDto.getDataReservaFim(),objDto.getHorarios(),objDto.getEspaco(),objDto.getUsuario(), objDto.getAprovada(), objDto.getCancelada());
-		return r1;
-	}
-
-	//Editar Reserva
 	public Reserva update(Reserva obj){
 		return  repo.save(obj);
 	}
 
-	//Listar reservas de aprovadas
+	public List<Reserva> findByDate(Date d){
+		return repo.findByDate(d);
+	}
+
+	public List<Reserva> findAll() {
+		return repo.findAll();
+	}
+
+	public List<Reserva> findByEspaco(Espaco e){
+		return repo.findByEspaco(e);
+	}
+
+	public Reserva buscar(Integer id) {
+		Reserva obj = repo.findOne(id);
+		return obj;
+	}
+
 	public List<Reserva> findByAprovadas(){
 		return repo.findByAprovadas();
 	}
 
-	//Listar reservas de pendentes
 	public List<Reserva> findByPendentes(){
 		return repo.findByPendentes();
 	}

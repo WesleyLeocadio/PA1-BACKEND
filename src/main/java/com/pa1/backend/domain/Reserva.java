@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Reserva implements Serializable{
+
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -105,7 +106,6 @@ public class Reserva implements Serializable{
 		this.horarios = horarios;
 	}
 
-
 	public Espaco getEspaco() {
 		return espaco;
 	}
@@ -113,8 +113,6 @@ public class Reserva implements Serializable{
 	public void setEspaco(Espaco espaco) {
 		this.espaco = espaco;
 	}
-	
-	
 
 	public Usuario getUsuario() {
 		return usuario;

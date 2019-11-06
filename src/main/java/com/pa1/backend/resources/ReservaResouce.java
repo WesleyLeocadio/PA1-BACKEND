@@ -2,7 +2,6 @@ package com.pa1.backend.resources;
 
 import java.net.URI;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -66,43 +65,6 @@ public class ReservaResouce {
         return ResponseEntity.ok().body(list);
     }
 
-    @ApiOperation("Cadastrar Reserva")
-    @RequestMapping(method = RequestMethod.POST)
-    public  ResponseEntity<Void> insertReserva(
-            @ApiParam("Objeto de Reserva")
-            @Valid @RequestBody ReservaDTO objDto ){
-        Reserva obj = service.fromDTO(objDto);
-        //gera o intervalo de datas inicio até fim, se igual gera apenas uma data
-        List<Date> todasDatas = determinarDatas(obj.getDataReservaInicio(), obj.getDataReservaFim());
-        if (!detectaColisao(obj, todasDatas)){
-            //se a data fim for maior do que a darta inicio o for roda todas as datas criando uma reserva para cada dia do intervalo
-            for(int i = 0; i<todasDatas.size(); i++){
-                System.out.println("NÃO TEM");
-                obj.setDataReservaInicio(todasDatas.get(i));
-                obj.setDataReservaFim(todasDatas.get(i));
-                obj = service.insert(obj);
-            }
-            URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdReserva())
-                    .toUri();
-            return ResponseEntity.created(uri).build();
-        }else{
-            System.out.println("JÁ TEM");
-            return ResponseEntity.noContent().build();
-        }
-    }
-
-    @ApiOperation("Cancelar Reserva")
-    @RequestMapping(path = {"/cancelar"}, method = RequestMethod.PUT)
-    public ResponseEntity<Void> deletarReserva(
-            @ApiParam("Id da Reserva")
-            @RequestParam Integer id
-    ){
-        Reserva obj = service.buscar(id);
-        obj.setCancelada(true);
-        service.update(obj);
-        return ResponseEntity.ok().build();
-    }
-
     @ApiOperation("Listar Reservas Aprovadas")
     @RequestMapping(path = {"/aprovadas"},method = RequestMethod.GET)
     public ResponseEntity<List<Reserva>> findByAprovadas(){
@@ -115,6 +77,50 @@ public class ReservaResouce {
     public ResponseEntity<List<Reserva>> findByPendentes(){
         List<Reserva> list= service.findByPendentes();
         return ResponseEntity.ok().body(list);
+    }
+
+    @ApiOperation("Cadastrar Reserva")
+    @RequestMapping(method = RequestMethod.POST)
+    public  ResponseEntity<Void> insertReserva(
+            @ApiParam("Objeto de Reserva")
+            @Valid @RequestBody ReservaDTO objDto
+    ){
+
+        Reserva obj = service.fromDTO(objDto);
+
+        List<Date> todasDatas = determinarDatas(obj.getDataReservaInicio(), obj.getDataReservaFim());
+
+        if (!detectaColisao(obj, todasDatas)){
+
+            for(int i = 0; i<todasDatas.size(); i++){
+                System.out.println("NÃO TEM");
+                obj.setDataReservaInicio(todasDatas.get(i));
+                obj.setDataReservaFim(todasDatas.get(i));
+                obj = service.insert(obj);
+            }
+
+            URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                    .buildAndExpand(obj.getIdReserva())
+                    .toUri();
+
+            return ResponseEntity.created(uri).build();
+
+        }else{
+            return ResponseEntity.noContent().build();
+        }
+
+    }
+
+    @ApiOperation("Cancelar Reserva")
+    @RequestMapping(path = {"/cancelar"}, method = RequestMethod.PUT)
+    public ResponseEntity<Void> deletarReserva(
+            @ApiParam("Id da Reserva")
+            @RequestParam Integer id
+    ){
+        Reserva obj = service.buscar(id);
+        obj.setCancelada(true);
+        service.update(obj);
+        return ResponseEntity.ok().build();
     }
 
     @ApiOperation("Aprovar Reserva")
@@ -138,38 +144,35 @@ public class ReservaResouce {
             @DateTimeFormat(pattern="dd-MM-yyyy")  Date dataInicio,
             @ApiParam("Data de fim da Reserva no formato dd-MM-yyyy")
             @DateTimeFormat(pattern="dd-MM-yyyy")  Date dataFim
-    ) {
+    ){
 
         Reserva obj = service.buscar(id);
-        //gera o intervalo de datas
-        //só está funcionando para uma data, se igual gera apenas uma data
+
         List<Date> todasDatas = determinarDatas(dataInicio, dataFim);
         if (!detectaColisao(obj, todasDatas)) {
-            //sujeitao: caso não haja colisão deletar as reservas anteriores - crir algum medoto - sujeitao
-            //alterar a data da reserva de acordo com o intervalo de datas, só está funcinando quando a inicio é igual a data fim.
+
             for (int i =0 ; i<todasDatas.size();i++){
                 obj.setDataReservaInicio(todasDatas.get(i));
                 obj.setDataReservaFim(todasDatas.get(i));
                 service.update(obj);
-                System.out.println("Alterou a data");
             }
             return ResponseEntity.ok().build();
         }else{
-            System.out.println("não alterou");
             return  ResponseEntity.noContent().build();
         }
 
     }
 
     private boolean detectaColisao(Reserva obj, List<Date> todasDatas){
+
         for (int i=0; i < todasDatas.size(); i++) {
-            System.out.println("testando colisao");
+
             List<Reserva> list = service.findByReserva(obj.getEspaco().getIdEspaco(), todasDatas.get(i));
+
             if (list.isEmpty()) {
                 return false;
             } else {
                 for (Reserva reserva : list) {
-                    System.out.println("verificando horarios");
                     for (int j = 0; j < reserva.getHorarios().length; j++) {
                         Integer horariosobj[] = obj.getHorarios();
                         Integer horariosReserva[] = reserva.getHorarios();
@@ -179,25 +182,36 @@ public class ReservaResouce {
                     }
                 }
             }
+
         }
+
         return false;
+
     }
 
     private List determinarDatas(Date inicio, Date fim){
+
         List<Date> listaDatas = new ArrayList<Date>();
+
         DateFormat df = new SimpleDateFormat ("dd-MM-yyyy");
+
         Date dt1 = inicio;
         Date dt2 = fim;
+
         Calendar cal = Calendar.getInstance();
         cal.setTime (dt1);
+
         Date dt;
+
         for (dt = dt1; dt.compareTo (dt2) <= 0; ) {
             listaDatas.add(dt);
             System.out.println (df.format (dt));
             cal.add (Calendar.DATE, +1);
             dt = cal.getTime();
         }
+
         return listaDatas;
+
     }
 
 }

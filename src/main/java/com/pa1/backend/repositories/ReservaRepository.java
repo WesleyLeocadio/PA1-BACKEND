@@ -19,7 +19,6 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
     @Query(value = "SELECT * FROM RESERVA WHERE ESPACO_ID = ?1", nativeQuery = true)
     List<Reserva> findByEspaco(Espaco e);
 
-    //    //rever essa pesquisa retornar todas reservas do espaço da reserva editada
     @Query(value = "SELECT * FROM RESERVA WHERE ESPACO_ID = ?1 AND DATA_RESERVA_INICIO = ?2 ", nativeQuery = true)
     List<Reserva> findByReserva(Integer idEspaco, Date d);
 
