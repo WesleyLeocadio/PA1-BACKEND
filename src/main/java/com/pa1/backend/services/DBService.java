@@ -40,7 +40,7 @@ public class DBService {
 		Usuario user6 = new Usuario(null, "Tiago batista","tiagoBatista@gmail.com","99928989",2,pe.encode("tiago"));
 		Usuario user7 = new Usuario(null, "Francisco","francisco@gmail.com","99928989",2,pe.encode("francisco"));
 
-		usuarioRepository.save(Arrays.asList(user1,user2,user3,user4,user5,user6,user7));
+		//usuarioRepository.save(Arrays.asList(user1,user2,user3,user4,user5,user6,user7));
 		
 		
 		Espaco esp1 = new Espaco(null,"Lab 2","Laboratório de informática","Prédio de Informática",false,"Luiz Antônio",false);
@@ -69,8 +69,8 @@ public class DBService {
 		esp1.getReservas().addAll(Arrays.asList(r1));
 		esp2.getReservas().addAll(Arrays.asList(r2));
 		
-		espacoRepository.save(Arrays.asList(esp1,esp2,esp3,esp4,esp5));
-		reservaRepository.save(Arrays.asList(r1,r2,r3,r4,r5,r6,r7));
+		//espacoRepository.save(Arrays.asList(esp1,esp2,esp3,esp4,esp5));
+		//reservaRepository.save(Arrays.asList(r1,r2,r3,r4,r5,r6,r7));
 
 	}
 
