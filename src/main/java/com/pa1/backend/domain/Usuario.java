@@ -37,7 +37,7 @@ public class Usuario implements Serializable {
 	@JsonIgnore
 	private String senha;
 
-	@JsonManagedReference
+	@JsonBackReference
 	@OneToMany(mappedBy = "usuario")
 	private List<Reserva> reservas = new ArrayList<Reserva>();
 

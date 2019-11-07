@@ -25,9 +25,14 @@ public class EspacoResouce {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> findById(
 			@ApiParam("Id do Espaço")
-			@PathVariable Integer id) {
+			@PathVariable Espaco id) {
 		Espaco obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj);
+	}
+
+	public Espaco findByIdTeste(Espaco id) {
+		Espaco obj = service.buscar(id);
+		return obj;
 	}
 
 
@@ -77,7 +82,7 @@ public class EspacoResouce {
 	@RequestMapping(path = {"/especial"}, method = RequestMethod.PUT)
 	public ResponseEntity<Void> especialEspaco(
 			@ApiParam("Id da Reserva")
-			@RequestParam Integer id
+			@RequestParam Espaco id
 	){
 		Espaco obj=service.buscar(id);
 		obj.setEspacoEsopecial(true);
@@ -89,7 +94,7 @@ public class EspacoResouce {
 	@RequestMapping(path = {"/desabilitar"}, method = RequestMethod.PUT)
 	public ResponseEntity<Void> desabilitarEspaco(
 			@ApiParam("Id da Reserva")
-			@RequestParam Integer id
+			@RequestParam Espaco id
 	){
 		Espaco obj=service.buscar(id);
 		obj.setEspacoDesabilitado(true);
@@ -101,7 +106,7 @@ public class EspacoResouce {
 	@RequestMapping(path = {"/habilitar"}, method = RequestMethod.PUT)
 	public ResponseEntity<Void> habilitarEspaco(
 			@ApiParam("Id da Reserva")
-			@RequestParam Integer id
+			@RequestParam Espaco id
 	){
 		Espaco obj=service.buscar(id);
 		obj.setEspacoDesabilitado(false);

@@ -1,8 +1,13 @@
 package com.pa1.backend.services;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import com.pa1.backend.domain.Usuario;
+import com.pa1.backend.resources.EspacoResouce;
+import com.pa1.backend.resources.UsuarioResouce;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,17 +21,30 @@ public class ReservaService {
 
 	@Autowired
 	private ReservaRepository repo;
+	@Autowired
+	private UsuarioResouce uso;
 
-	public Reserva fromDTO(ReservaDTO objDto) {
+	@Autowired
+	private EspacoResouce espaco;
+
+
+	Espaco teste = null;
+	Usuario teste2 = null;
+	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+
+	public Reserva fromDTO(ReservaDTO objDto) throws ParseException {
+		System.out.println(objDto.getDataReservaInicio());
 		Reserva r1 = new Reserva(null,
-				objDto.getDataReservaInicio(),
-				objDto.getDataReservaFim(),
+				sdf.parse(objDto.getDataReservaInicio()),
+				sdf.parse(objDto.getDataReservaFim()),
 				objDto.getHorarios(),
-				objDto.getEspaco(),
-				objDto.getUsuario(),
+				espaco.findByIdTeste(objDto.getEspaco()),
+				uso.findByIdTeste(objDto.getUsuario()),
 				objDto.getAprovada(),
 				objDto.getCancelada()
 		);
+		System.out.println("VAIIII MANDARRRRRR "+ r1);
 		return r1;
 	}
 

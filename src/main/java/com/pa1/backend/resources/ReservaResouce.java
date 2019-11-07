@@ -2,6 +2,7 @@ package com.pa1.backend.resources;
 
 import java.net.URI;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,6 +11,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.pa1.backend.dto.ReservaDTO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pa1.backend.domain.Espaco;
 import com.pa1.backend.domain.Reserva;
-import com.pa1.backend.dto.ReservaDTO;
 import com.pa1.backend.services.ReservaService;
 
 @RestController
@@ -85,8 +86,16 @@ public class ReservaResouce {
             @ApiParam("Objeto de Reserva")
             @Valid @RequestBody ReservaDTO objDto
     ){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        Reserva obj = new Reserva();
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+ objDto.getEspaco());
+        try {
 
-        Reserva obj = service.fromDTO(objDto);
+            obj = service.fromDTO(objDto);
+            System.out.println("--------------------------------------------------------------reserva recebida: "+ obj);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         List<Date> todasDatas = determinarDatas(obj.getDataReservaInicio(), obj.getDataReservaFim());
 

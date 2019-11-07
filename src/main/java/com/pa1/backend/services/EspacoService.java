@@ -35,8 +35,9 @@ public class EspacoService {
 		return repo.save(obj);
 	}
 
-	public Espaco buscar(Integer id) {
-		Espaco obj = repo.findOne(id);
+	public Espaco buscar(Espaco e) {
+		System.out.println("-------------------------------------------- "+e.getIdEspaco());
+		Espaco obj = repo.findOne(e.getIdEspaco());
 		return obj;
 	}
 

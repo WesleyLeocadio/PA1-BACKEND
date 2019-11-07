@@ -1,29 +1,27 @@
 package com.pa1.backend.dto;
 
-import java.io.Serializable;
-import java.util.Date;
-
 import com.pa1.backend.domain.Espaco;
 import com.pa1.backend.domain.Usuario;
+
+import java.io.Serializable;
 
 public class ReservaDTO  implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
-	private Date dataReservaInicio;
-	private Date dataReservaFim;
+	private String dataReservaInicio;
+	private String dataReservaFim;
 	private Integer horarios[] = new Integer[16];
 	private Usuario usuario;
 	private Boolean aprovada;
 	private Boolean cancelada;
-	
 	private Espaco espaco;
 
 	public ReservaDTO() {
 		
 	}
 
-	public ReservaDTO(Integer id, Date dataReservaInicio, Date dataReservaFim, Integer[] horarios, Espaco espaco, Usuario usuario,Boolean aprovada, Boolean cancelada) {
+	public ReservaDTO(Integer id, String dataReservaInicio, String dataReservaFim, Integer[] horarios, Espaco espaco, Usuario usuario, Boolean aprovada, Boolean cancelada) {
 		this.id = id;
 		this.dataReservaInicio = dataReservaInicio;
 		this.dataReservaFim = dataReservaFim;
@@ -58,19 +56,19 @@ public class ReservaDTO  implements Serializable{
 		this.id = id;
 	}
 
-	public Date getDataReservaInicio() {
+	public String getDataReservaInicio() {
 		return dataReservaInicio;
 	}
 
-	public void setDataReservaInicio(Date dataReservaInicio) {
+	public void setDataReservaInicio(String dataReservaInicio) {
 		this.dataReservaInicio = dataReservaInicio;
 	}
 
-	public Date getDataReservaFim() {
+	public String getDataReservaFim() {
 		return dataReservaFim;
 	}
 
-	public void setDataReservaFim(Date dataReservaFim) {
+	public void setDataReservaFim(String dataReservaFim) {
 		this.dataReservaFim = dataReservaFim;
 	}
 
@@ -97,5 +95,4 @@ public class ReservaDTO  implements Serializable{
 	public void setEspaco(Espaco espaco) {
 		this.espaco = espaco;
 	}
-
 }

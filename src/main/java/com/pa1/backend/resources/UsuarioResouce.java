@@ -30,9 +30,13 @@ public class UsuarioResouce {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> findById(
 			@ApiParam("Id do Usuário")
-			@PathVariable Integer id) {
+			@PathVariable Usuario id) {
 		Usuario obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj);
+	}
+	public Usuario findByIdTeste(Usuario id) {
+		Usuario obj = service.buscar(id);
+		return obj;
 	}
 
 	@ApiOperation("Listar todos os Usuários")

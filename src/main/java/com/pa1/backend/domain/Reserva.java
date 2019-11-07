@@ -27,12 +27,12 @@ public class Reserva implements Serializable{
 	private Boolean aprovada;
 	private Boolean cancelada;
 	
-    @JsonManagedReference
+    //@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name="espaco_id")
 	private Espaco espaco;
-    
-    @JsonBackReference
+
+	//@JsonManagedReference
     @ManyToOne
 	@JoinColumn(name="usuario_id")
 	private Usuario usuario;

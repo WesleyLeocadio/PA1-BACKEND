@@ -1,6 +1,5 @@
 package com.pa1.backend.services;
 
-import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -47,8 +46,8 @@ public class UsuarioService {
 		}
 
 	// uma operacao q buscar um espaco por codigo
-	public Usuario buscar(Integer id) {
-		Usuario obj = repo.findOne(id);
+	public Usuario buscar(Usuario u) {
+		Usuario obj = repo.findOne(u.getIdUsuario());
 		return obj;
 	}
 	
