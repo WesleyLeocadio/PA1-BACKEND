@@ -41,11 +41,11 @@ public class DBService {
 
 		usuarioRepository.save(Arrays.asList(user1,user2,user3,user4,user5));
 
-		Espaco esp1 = new Espaco(null,"Lab 2","Laboratório de informática","Prédio de Informática",false,"Luiz Antônio",false);
-		Espaco esp2 = new Espaco(null,"Lab 3","Sala de estudos","Prédio de Informática",false,"Luiz Antônio",false);
-		Espaco esp3 = new Espaco(null,"Auditório","Auditório do ensino médio da EAJ","Audtório possui caixa de som ...",true,"Luiz Antônio",false);
-		Espaco esp4 = new Espaco(null,"Lab 4","Laboratório de química do ensino médio da EAJ","Laboratório de química",true,"Luiz Fernando",false);
-		Espaco esp5 = new Espaco(null,"Lab 5","Sala de aula","Capacidade para 25 alunos",false,"Luiz Fernando",false);
+		Espaco esp1 = new Espaco(null,"Lab 2","Laboratório de informática","Prédio de Informática","Luiz Antônio",false,false);
+		Espaco esp2 = new Espaco(null,"Lab 3","Sala de estudos","Prédio de Informática","Luiz Antônio",false,false);
+		Espaco esp3 = new Espaco(null,"Auditório","Auditório do ensino médio da EAJ","Audtório possui caixa de som ...", "Luiz Antônio",true,false);
+		Espaco esp4 = new Espaco(null,"Lab 4","Laboratório de química do ensino médio da EAJ","Laboratório de química","Luiz Fernando",true,false);
+		Espaco esp5 = new Espaco(null,"Lab 5","Sala de aula","Capacidade para 25 alunos", "Luiz Fernando",false,false);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 

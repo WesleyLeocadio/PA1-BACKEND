@@ -11,13 +11,13 @@ import java.util.List;
 @Repository
 public interface EspacoRepository extends JpaRepository<Espaco, Integer> {
 
-    @Query(value = "SELECT * FROM ESPACO WHERE ESPACO_LOCALIZACAO = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM ESPACO WHERE LOCALIZACAO = ?1", nativeQuery = true)
     List<Espaco> findByLocalizacao(String local);
 
-    @Query(value = "SELECT * FROM ESPACO WHERE ESPACO_DESABILITADO = FALSE", nativeQuery = true)
+    @Query(value = "SELECT * FROM ESPACO WHERE DESABILITADO = FALSE", nativeQuery = true)
     List<Espaco> findByHabilitado();
 
-    @Query(value = "SELECT * FROM ESPACO WHERE ESPACO_DESABILITADO = TRUE", nativeQuery = true)
+    @Query(value = "SELECT * FROM ESPACO WHERE DESABILITADO = TRUE", nativeQuery = true)
     List<Espaco> findByDesabilitado();
 
 }

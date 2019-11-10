@@ -193,7 +193,7 @@ public class ReservaResouce {
 
         for (int i=0; i < todasDatas.size(); i++) {
 
-            List<Reserva> list = service.findByReserva(obj.getEspaco().getIdEspaco(), todasDatas.get(i));
+            List<Reserva> list = service.findByReserva(obj.getEspaco().getId(), todasDatas.get(i));
 
             if (list.isEmpty()) {
                 return false;

@@ -6,63 +6,72 @@ public class EspacoDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String espacoNome;
-    private String espacoDescricao;
-    private String espacoLocalizacao;
-    private boolean espacoEspecial;
-    private String espacoResponsavel;
-    private boolean espacoDesabilitado;
+    private String nome;
+    private String descricao;
+    private String localizacao;
+    private String responsavel;
+    private boolean especial;
+    private boolean desabilitado;
 
     public EspacoDTO() {
 
     }
 
-    public String getEspacoNome() {
-        return espacoNome;
+    public EspacoDTO(String nome, String descricao, String localizacao, String responsavel, boolean especial, boolean desabilitado) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.localizacao = localizacao;
+        this.responsavel = responsavel;
+        this.especial = especial;
+        this.desabilitado = desabilitado;
     }
 
-    public void setEspacoNome(String espacoNome) {
-        this.espacoNome = espacoNome;
+    public String getNome() {
+        return nome;
     }
 
-    public String getEspacoDescricao() {
-        return espacoDescricao;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public void setEspacoDescricao(String espacoDescricao) {
-        this.espacoDescricao = espacoDescricao;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public String getEspacoLocalizacao() {
-        return espacoLocalizacao;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
-    public void setEspacoLocalizacao(String espacoLocalizacao) {
-        this.espacoLocalizacao = espacoLocalizacao;
+    public String getLocalizacao() {
+        return localizacao;
     }
 
-    public boolean isEspacoEspecial() {
-        return espacoEspecial;
+    public void setLocalizacao(String localizacao) {
+        this.localizacao = localizacao;
     }
 
-    public void setEspacoEspecial(boolean espacoEspecial) {
-        this.espacoEspecial = espacoEspecial;
+    public String getResponsavel() {
+        return responsavel;
     }
 
-    public String getEspacoResponsavel() {
-        return espacoResponsavel;
+    public void setResponsavel(String responsavel) {
+        this.responsavel = responsavel;
     }
 
-    public void setEspacoResponsavel(String espacoResponsavel) {
-        this.espacoResponsavel = espacoResponsavel;
+    public boolean isEspecial() {
+        return especial;
     }
 
-    public boolean isEspacoDesabilitado() {
-        return espacoDesabilitado;
+    public void setEspecial(boolean especial) {
+        this.especial = especial;
     }
 
-    public void setEspacoDesabilitado(boolean espacoDesabilitado) {
-        this.espacoDesabilitado = espacoDesabilitado;
+    public boolean isDesabilitado() {
+        return desabilitado;
+    }
+
+    public void setDesabilitado(boolean desabilitado) {
+        this.desabilitado = desabilitado;
     }
 
 }
