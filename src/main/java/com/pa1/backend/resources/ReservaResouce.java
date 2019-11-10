@@ -80,24 +80,62 @@ public class ReservaResouce {
         return ResponseEntity.ok().body(list);
     }
 
+    @ApiOperation("Listar Reservas Canceladas")
+    @RequestMapping(path = {"/canceladas"},method = RequestMethod.GET)
+    public ResponseEntity<List<Reserva>> findByCanceladas(){
+        List<Reserva> list= service.findByCanceladas();
+        return ResponseEntity.ok().body(list);
+    }
+
+    @ApiOperation("Cancelar Reserva")
+    @RequestMapping(path = {"/cancelar"}, method = RequestMethod.PUT)
+    public ResponseEntity<Void> cancelaReserva(
+            @ApiParam("Id da Reserva")
+            @RequestParam Integer id,
+            @ApiParam("Justificativa")
+            @RequestParam String justificativa
+    ){
+        Reserva obj = service.buscar(id);
+        obj.setJustificativa(justificativa);
+        obj.setCancelada(true);
+        service.update(obj);
+        return ResponseEntity.ok().build();
+    }
+
+    @ApiOperation("Aprovar Reserva")
+    @RequestMapping(path = {"/aprovar"}, method = RequestMethod.PUT)
+    public ResponseEntity<Void> aprovaReserva(
+            @ApiParam("Id da Reserva")
+            @RequestParam Integer id
+    ){
+        Reserva obj = service.buscar(id);
+        obj.setAprovada(true);
+        service.update(obj);
+        return ResponseEntity.ok().build();
+    }
+
     @ApiOperation("Cadastrar Reserva")
     @RequestMapping(method = RequestMethod.POST)
     public  ResponseEntity<Void> insertReserva(
             @ApiParam("Objeto de Reserva")
             @Valid @RequestBody ReservaDTO objDto
     ){
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         Reserva obj = new Reserva();
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+ objDto.getEspaco());
-        try {
 
+        try {
             obj = service.fromDTO(objDto);
-            System.out.println("--------------------------------------------------------------reserva recebida: "+ obj);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        List<Date> todasDatas = determinarDatas(obj.getDataReservaInicio(), obj.getDataReservaFim());
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(obj.getId())
+                .toUri();
+        return ResponseEntity.created(uri).build();
+
+        /*List<Date> todasDatas = determinarDatas(obj.getDataReservaInicio(), obj.getDataReservaFim());
 
         if (!detectaColisao(obj, todasDatas)){
 
@@ -116,32 +154,8 @@ public class ReservaResouce {
 
         }else{
             return ResponseEntity.noContent().build();
-        }
+        }*/
 
-    }
-
-    @ApiOperation("Cancelar Reserva")
-    @RequestMapping(path = {"/cancelar"}, method = RequestMethod.PUT)
-    public ResponseEntity<Void> deletarReserva(
-            @ApiParam("Id da Reserva")
-            @RequestParam Integer id
-    ){
-        Reserva obj = service.buscar(id);
-        obj.setCancelada(true);
-        service.update(obj);
-        return ResponseEntity.ok().build();
-    }
-
-    @ApiOperation("Aprovar Reserva")
-    @RequestMapping(path = {"/aprovar"}, method = RequestMethod.PUT)
-    public ResponseEntity<Void> aprovarReserva(
-            @ApiParam("Id da Reserva")
-            @RequestParam Integer id
-    ){
-        Reserva obj = service.buscar(id);
-        obj.setAprovada(true);
-        service.update(obj);
-        return ResponseEntity.ok().build();
     }
 
     @ApiOperation("Editar Reserva")
@@ -149,15 +163,18 @@ public class ReservaResouce {
     public ResponseEntity<Void> updateReserva(
             @ApiParam("Id da Reserva")
             @RequestParam Integer id,
-            @ApiParam("Data de início da Reserva no formato dd-MM-yyyy")
-            @DateTimeFormat(pattern="dd-MM-yyyy")  Date dataInicio,
-            @ApiParam("Data de fim da Reserva no formato dd-MM-yyyy")
-            @DateTimeFormat(pattern="dd-MM-yyyy")  Date dataFim
+            @ApiParam("Data da Reserva no formato dd-MM-yyyy")
+            @DateTimeFormat(pattern="dd-MM-yyyy")  Date data
     ){
 
         Reserva obj = service.buscar(id);
 
-        List<Date> todasDatas = determinarDatas(dataInicio, dataFim);
+        obj.setData(data);
+        service.update(obj);
+        return ResponseEntity.ok().build();
+
+        /*List<Date> todasDatas = determinarDatas(dataInicio, dataFim);
+
         if (!detectaColisao(obj, todasDatas)) {
 
             for (int i =0 ; i<todasDatas.size();i++){
@@ -168,7 +185,7 @@ public class ReservaResouce {
             return ResponseEntity.ok().build();
         }else{
             return  ResponseEntity.noContent().build();
-        }
+        }*/
 
     }
 

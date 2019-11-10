@@ -2,14 +2,12 @@ package com.pa1.backend.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -20,13 +18,14 @@ public class Reserva implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer idReserva;
-	private Date dataReservaInicio;
-	private Date dataReservaFim;
+	private Integer id;
+	private Date data;
+	private String justificativa;
 	private Integer horarios[] = new Integer[16];
+	private Integer diaSemana[] = new Integer[7];
 	private Boolean aprovada;
 	private Boolean cancelada;
-	
+
     //@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name="espaco_id")
@@ -36,18 +35,51 @@ public class Reserva implements Serializable{
     @ManyToOne
 	@JoinColumn(name="usuario_id")
 	private Usuario usuario;
-	
+
 	public Reserva() {}
 
-	public Reserva(Integer idReserva, Date dataReservaInicio, Date dataReservaFim, Integer[] horarios, Espaco espaco, Usuario user, Boolean aprovada, Boolean cancelada) {
-		this.idReserva = idReserva;
-		this.dataReservaInicio = dataReservaInicio;
-		this.dataReservaFim = dataReservaFim;
+	public Reserva(Integer id, Date data, String justificativa, Integer[] horarios, Integer[] diaSemana, Boolean aprovada, Boolean cancelada, Espaco espaco, Usuario usuario) {
+		this.id = id;
+		this.data = data;
+		this.justificativa = justificativa;
 		this.horarios = horarios;
-		this.espaco = espaco;
-		this.usuario = user;
+		this.diaSemana = diaSemana;
 		this.aprovada = aprovada;
 		this.cancelada = cancelada;
+		this.espaco = espaco;
+		this.usuario = usuario;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
+	}
+
+	public String getJustificativa() {
+		return justificativa;
+	}
+
+	public void setJustificativa(String justificativa) {
+		this.justificativa = justificativa;
+	}
+
+	public Integer[] getDiaSemana() {
+		return diaSemana;
+	}
+
+	public void setDiaSemana(Integer[] diaSemana) {
+		this.diaSemana = diaSemana;
 	}
 
 	public Boolean getCancelada() {
@@ -64,38 +96,6 @@ public class Reserva implements Serializable{
 
 	public void setAprovada(Boolean aprovada) {
 		this.aprovada = aprovada;
-	}
-
-	public Date getDataReservaInicio() {
-		return dataReservaInicio;
-	}
-
-	public void setDataReservaInicio(Date dataReservaInicio) {
-		this.dataReservaInicio = dataReservaInicio;
-	}
-
-	public Date getDataReservaFim() {
-		return dataReservaFim;
-	}
-
-	public void setDataReservaFim(Date dataReservaFim) {
-		this.dataReservaFim = dataReservaFim;
-	}
-
-	public Integer getIdReserva() {
-		return idReserva;
-	}
-
-	public void setIdReserva(Integer idReserva) {
-		this.idReserva = idReserva;
-	}
-
-	public Date getDataReserva() {
-		return dataReservaInicio;
-	}
-
-	public void setDataReserva(Date dataReserva) {
-		this.dataReservaInicio = dataReserva;
 	}
 
 	public Integer[] getHorarios() {
@@ -126,7 +126,7 @@ public class Reserva implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((idReserva == null) ? 0 : idReserva.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -139,10 +139,10 @@ public class Reserva implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Reserva other = (Reserva) obj;
-		if (idReserva == null) {
-			if (other.idReserva != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!idReserva.equals(other.idReserva))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
