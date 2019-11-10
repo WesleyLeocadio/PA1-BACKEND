@@ -25,6 +25,7 @@ import org.springframework.web.servlet.config.annotation.*;
 
 import com.pa1.backend.security.JWTAuthenticationFilter;
 import com.pa1.backend.security.JWTUtil;
+import com.pa1.backend.security.JWTauthorizationFilter;
 
 import org.springframework.core.env.Environment;
 import java.util.Arrays;
@@ -74,14 +75,16 @@ public class WebConfiguration  extends WebSecurityConfigurerAdapter{
 		http.cors().and().csrf().disable();
 		//Todos os caminhos que tiver aqui pode ser acessado, caso contrário, exige a  autenticação
 		http.authorizeRequests()
-			.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
+		//	.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
 			.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_GET).permitAll()
 			.antMatchers(HttpMethod.PUT, PUBLIC_MATCHERS_GET).permitAll()
 			.antMatchers(HttpMethod.DELETE, PUBLIC_MATCHERS_GET).permitAll()
-			.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS).permitAll()
+		//	.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS).permitAll()
 			.antMatchers(PUBLIC_MATCHERS_H2).permitAll()
 			.anyRequest().authenticated();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+		http.addFilter(new JWTauthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
+
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 
