@@ -59,14 +59,14 @@ public class EspacoResouce {
 	@ApiOperation("Listar todos os Espaços que tem Computador")
 	@RequestMapping(path = {"/computadores"}, method = RequestMethod.GET)
 	public ResponseEntity<List<Espaco>> findByComputadores() {
-		List<Espaco> list= service.findByDesabilitado();
+		List<Espaco> list= service.findByComputadores();
 		return ResponseEntity.ok().body(list);
 	}
 
 	@ApiOperation("Listar todos os Espaços que nao tem Computador")
 	@RequestMapping(path = {"/naocomputadores"}, method = RequestMethod.GET)
 	public ResponseEntity<List<Espaco>> findByNComputadores() {
-		List<Espaco> list= service.findByDesabilitado();
+		List<Espaco> list= service.findByNComputadores();
 		return ResponseEntity.ok().body(list);
 	}
 
