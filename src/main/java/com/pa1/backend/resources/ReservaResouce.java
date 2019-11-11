@@ -126,6 +126,7 @@ public class ReservaResouce {
 
         try {
             obj = service.fromDTO(objDto);
+            service.insert(obj);
         } catch (ParseException e) {
             e.printStackTrace();
         }
