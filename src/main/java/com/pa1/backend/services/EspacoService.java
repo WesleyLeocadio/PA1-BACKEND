@@ -20,7 +20,11 @@ public class EspacoService {
 				objDto.getLocalizacao(),
 				objDto.getResponsavel(),
 				objDto.isEspecial(),
-				objDto.isDesabilitado()
+				objDto.getJustificativa(),
+				objDto.isDesabilitado(),
+				objDto.isComputadores(),
+				objDto.getQtdPessoas(),
+				objDto.getRamal()
 		);
 		return e;
 	}
