@@ -59,4 +59,12 @@ public class EspacoService {
 		return repo.findByLocalizacao(local);
 	}
 
+	public List<Espaco> findByComputadores() {
+		return repo.findByComputadores();
+	}
+
+	public List<Espaco> findByNComputadores() {
+		return repo.findByNComputadores();
+	}
+
 }

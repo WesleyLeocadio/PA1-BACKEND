@@ -39,13 +39,13 @@ public class DBService {
 		Usuario user4 = new Usuario(null, "Ana Bheatriz Chacon","anabheatrizchacon@outlook.com.com","00000000",3,pe.encode("biachacon"));
 		Usuario user5 = new Usuario(null, "Tiago batista","tiagoBatista@gmail.com","99928989",2,pe.encode("tiago"));
 
-		//usuarioRepository.save(Arrays.asList(user1,user2,user3,user4,user5));
+		usuarioRepository.save(Arrays.asList(user1,user2,user3,user4,user5));
 
-		Espaco esp1 = new Espaco(null,"Lab 2","Laboratório de informática","Prédio de Informática","Luiz Antônio",false,false);
-		Espaco esp2 = new Espaco(null,"Lab 3","Sala de estudos","Prédio de Informática","Luiz Antônio",false,false);
-		Espaco esp3 = new Espaco(null,"Auditório","Auditório do ensino médio da EAJ","Audtório possui caixa de som ...", "Luiz Antônio",true,false);
-		Espaco esp4 = new Espaco(null,"Lab 4","Laboratório de química do ensino médio da EAJ","Laboratório de química","Luiz Fernando",true,false);
-		Espaco esp5 = new Espaco(null,"Lab 5","Sala de aula","Capacidade para 25 alunos", "Luiz Fernando",false,false);
+		Espaco esp1 = new Espaco(null,"Lab 2","Laboratório de informática","Prédio de Informática","Luiz Antônio",false, "", false, true, 30, 123);
+		Espaco esp2 = new Espaco(null,"Lab 3","Sala de estudos","Prédio de Informática","Luiz Antônio", false, "", false, true, 40, 123);
+		Espaco esp3 = new Espaco(null,"Auditório","Auditório do ensino médio da EAJ","Audtório possui caixa de som ...", "Luiz Antônio",true, "Espaço para eventos importantes", false, false, 50, 321);
+		Espaco esp4 = new Espaco(null,"Lab 4","Laboratório de química do ensino médio da EAJ","Laboratório de química","Luiz Fernando",true, "Equipamentos de custo elevado", false, false, 30, 123);
+		Espaco esp5 = new Espaco(null,"Lab 5","Sala de aula","Capacidade para 25 alunos", "Luiz Fernando",false, "", false, false, 25, 123);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -76,8 +76,8 @@ public class DBService {
 		esp1.getReservas().addAll(Arrays.asList(r1));
 		esp2.getReservas().addAll(Arrays.asList(r2));
 		
-		//espacoRepository.save(Arrays.asList(esp1,esp2,esp3,esp4,esp5));
-		//reservaRepository.save(Arrays.asList(r1,r2,r3,r4,r5));
+		espacoRepository.save(Arrays.asList(esp1,esp2,esp3,esp4,esp5));
+		reservaRepository.save(Arrays.asList(r1,r2,r3,r4,r5));
 
 	}
 
