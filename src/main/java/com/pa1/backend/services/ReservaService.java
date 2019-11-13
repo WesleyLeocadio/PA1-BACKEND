@@ -29,7 +29,7 @@ public class ReservaService {
 
 	public Reserva fromDTO(ReservaDTO objDto) throws ParseException {
 		Reserva r1 = new Reserva(null,
-				sdf.parse(objDto.getData()),
+				sdf.parse(objDto.getDataReserva()),
 				objDto.getJustificativa(),
 				objDto.getHorarios(),
 				objDto.getDiaSemana(),

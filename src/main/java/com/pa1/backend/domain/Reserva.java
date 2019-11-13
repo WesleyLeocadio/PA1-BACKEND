@@ -19,7 +19,7 @@ public class Reserva implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private Date data;
+	private Date dataReserva;
 	private String justificativa;
 	private Integer horarios[] = new Integer[16];
 	private Integer diaSemana[] = new Integer[7];
@@ -40,7 +40,7 @@ public class Reserva implements Serializable{
 
 	public Reserva(Integer id, Date data, String justificativa, Integer[] horarios, Integer[] diaSemana, Boolean aprovada, Boolean cancelada, Espaco espaco, Usuario usuario) {
 		this.id = id;
-		this.data = data;
+		this.dataReserva = data;
 		this.justificativa = justificativa;
 		this.horarios = horarios;
 		this.diaSemana = diaSemana;
@@ -59,11 +59,11 @@ public class Reserva implements Serializable{
 	}
 
 	public Date getData() {
-		return data;
+		return dataReserva;
 	}
 
 	public void setData(Date data) {
-		this.data = data;
+		this.dataReserva = data;
 	}
 
 	public String getJustificativa() {

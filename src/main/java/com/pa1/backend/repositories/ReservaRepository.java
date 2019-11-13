@@ -13,14 +13,14 @@ import java.util.List;
 @Repository
 public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
 
-    @Query(value = "SELECT * FROM RESERVA WHERE DATA = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM RESERVA WHERE DATA_RESERVA = ?1", nativeQuery = true)
     List<Reserva> findByDate(Date d);
 
-    @Query(value = "SELECT * FROM RESERVA WHERE ESPACO_ID = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM RESERVA WHERE ID = ?1", nativeQuery = true)
     List<Reserva> findByEspaco(Espaco e);
 
-    @Query(value = "SELECT * FROM RESERVA WHERE ESPACO_ID = ?1 AND DATA = ?2 ", nativeQuery = true)
-    List<Reserva> findByReserva(Integer idEspaco, Date d);
+    @Query(value = "SELECT * FROM RESERVA WHERE ID = ?1 AND DATA = ?2 ", nativeQuery = true)
+    List<Reserva> findByReserva(Integer id, Date d);
 
     @Query(value = "SELECT * FROM RESERVA WHERE APROVADA = TRUE  AND CANCELADA = FALSE", nativeQuery = true)
     List<Reserva> findByAprovadas();
