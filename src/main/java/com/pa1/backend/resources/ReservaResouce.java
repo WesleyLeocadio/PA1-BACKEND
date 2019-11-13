@@ -61,8 +61,15 @@ public class ReservaResouce {
     @RequestMapping(path = {"/date"},method = RequestMethod.GET)
     public ResponseEntity<List<Reserva>> findByDate(
             @ApiParam("Data no formato dd-MM-yyyy")
-            @RequestParam @DateTimeFormat(pattern="dd-MM-yyyy")  Date date) {
-        List<Reserva> list= service.findByDate(date);
+            @RequestParam @DateTimeFormat(pattern="dd-MM-yyyy")  String date){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        Date d = new Date();
+        try {
+            d = sdf.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        List<Reserva> list= service.findByDate(d);
         return ResponseEntity.ok().body(list);
     }
 
