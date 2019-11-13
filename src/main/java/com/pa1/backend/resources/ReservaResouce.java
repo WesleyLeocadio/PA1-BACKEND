@@ -133,6 +133,22 @@ public class ReservaResouce {
 
         try {
             obj = service.fromDTO(objDto);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if(!detectaColisao(obj, obj.getData())){
+            service.insert(obj);
+            URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                    .buildAndExpand(obj.getId())
+                    .toUri();
+            return ResponseEntity.created(uri).build();
+        }else{
+            return ResponseEntity.noContent().build();
+        }
+
+
+        /*try {
+            obj = service.fromDTO(objDto);
             service.insert(obj);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -141,28 +157,7 @@ public class ReservaResouce {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(obj.getId())
                 .toUri();
-        return ResponseEntity.created(uri).build();
-
-        /*List<Date> todasDatas = determinarDatas(obj.getDataReservaInicio(), obj.getDataReservaFim());
-
-        if (!detectaColisao(obj, todasDatas)){
-
-            for(int i = 0; i<todasDatas.size(); i++){
-                System.out.println("NÃO TEM");
-                obj.setDataReservaInicio(todasDatas.get(i));
-                obj.setDataReservaFim(todasDatas.get(i));
-                obj = service.insert(obj);
-            }
-
-            URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                    .buildAndExpand(obj.getIdReserva())
-                    .toUri();
-
-            return ResponseEntity.created(uri).build();
-
-        }else{
-            return ResponseEntity.noContent().build();
-        }*/
+        return ResponseEntity.created(uri).build();*/
 
     }
 
@@ -174,78 +169,65 @@ public class ReservaResouce {
             @ApiParam("Data da Reserva no formato dd-MM-yyyy")
             @DateTimeFormat(pattern="dd-MM-yyyy")  Date data
     ){
-
         Reserva obj = service.buscar(id);
+        if(!detectaColisao(obj, data)){
+            obj.setData(data);
+            service.update(obj);
+            return ResponseEntity.ok().build();
+        }else{
+            System.out.println("não atualizada");
+            return ResponseEntity.noContent().build();
+        }
+
+
+       /* Reserva obj = service.buscar(id);
 
         obj.setData(data);
         service.update(obj);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().build();*/
 
-        /*List<Date> todasDatas = determinarDatas(dataInicio, dataFim);
-
-        if (!detectaColisao(obj, todasDatas)) {
-
-            for (int i =0 ; i<todasDatas.size();i++){
-                obj.setDataReservaInicio(todasDatas.get(i));
-                obj.setDataReservaFim(todasDatas.get(i));
-                service.update(obj);
-            }
-            return ResponseEntity.ok().build();
-        }else{
-            return  ResponseEntity.noContent().build();
-        }*/
 
     }
 
-    private boolean detectaColisao(Reserva obj, List<Date> todasDatas){
-
-        for (int i=0; i < todasDatas.size(); i++) {
-
-            List<Reserva> list = service.findByReserva(obj.getEspaco().getId(), todasDatas.get(i));
-
-            if (list.isEmpty()) {
-                return false;
-            } else {
-                for (Reserva reserva : list) {
-                    for (int j = 0; j < reserva.getHorarios().length; j++) {
-                        Integer horariosobj[] = obj.getHorarios();
-                        Integer horariosReserva[] = reserva.getHorarios();
-                        if (horariosobj[j] == 1 && horariosReserva[j] == 1) {
-                            return true;
-                        }
+    private boolean detectaColisao(Reserva obj, Date data){
+        List<Reserva> list = service.findByReserva(obj.getEspaco().getId(), data);
+        if(!list.isEmpty()){
+            for (Reserva reserva : list) {
+                for (int j = 0; j < reserva.getHorarios().length; j++) {
+                    Integer horariosobj[] = obj.getHorarios();
+                    Integer horariosReserva[] = reserva.getHorarios();
+                    if (horariosobj[j] == 1 && horariosReserva[j] == 1) {
+                        return true;
                     }
                 }
             }
-
         }
-
         return false;
-
     }
 
-    private List determinarDatas(Date inicio, Date fim){
-
-        List<Date> listaDatas = new ArrayList<Date>();
-
-        DateFormat df = new SimpleDateFormat ("dd-MM-yyyy");
-
-        Date dt1 = inicio;
-        Date dt2 = fim;
-
-        Calendar cal = Calendar.getInstance();
-        cal.setTime (dt1);
-
-        Date dt;
-
-        for (dt = dt1; dt.compareTo (dt2) <= 0; ) {
-            listaDatas.add(dt);
-            System.out.println (df.format (dt));
-            cal.add (Calendar.DATE, +1);
-            dt = cal.getTime();
-        }
-
-        return listaDatas;
-
-    }
+//    private List determinarDatas(Date inicio, Date fim){
+//
+//        List<Date> listaDatas = new ArrayList<Date>();
+//
+//        DateFormat df = new SimpleDateFormat ("dd-MM-yyyy");
+//
+//        Date dt1 = inicio;
+//        Date dt2 = fim;
+//
+//        Calendar cal = Calendar.getInstance();
+//        cal.setTime (dt1);
+//
+//        Date dt;
+//
+//        for (dt = dt1; dt.compareTo (dt2) <= 0; ) {
+//            listaDatas.add(dt);
+//            System.out.println (df.format (dt));
+//            cal.add (Calendar.DATE, +1);
+//            dt = cal.getTime();
+//        }
+//
+//        return listaDatas;
+//
+//    }
 
 }
