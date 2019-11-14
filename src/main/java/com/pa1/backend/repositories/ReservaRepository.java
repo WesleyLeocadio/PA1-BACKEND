@@ -22,10 +22,10 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
     @Query(value = "SELECT * FROM RESERVA WHERE ID = ?1 AND DATA = ?2 ", nativeQuery = true)
     List<Reserva> findByReserva(Integer id, Date d);
 
-    @Query(value = "SELECT * FROM RESERVA ORDER BY data_reserva ASC  WHERE APROVADA = TRUE  AND CANCELADA = FALSE", nativeQuery = true)
+    @Query(value = "SELECT * FROM RESERVA WHERE (APROVADA = TRUE  AND CANCELADA = FALSE) ORDER BY DATA_RESERVA", nativeQuery = true)
     List<Reserva> findByAprovadas();
 
-    @Query(value = "SELECT * FROM RESERVA ORDER BY data_reserva DESC WHERE APROVADA = FALSE AND CANCELADA = FALSE ", nativeQuery = true)
+    @Query(value = "SELECT * FROM RESERVA WHERE (APROVADA = FALSE AND CANCELADA = FALSE) ORDER BY DATA_RESERVA ", nativeQuery = true)
     List<Reserva> findByPendentes();
 
     @Query(value = "SELECT * FROM RESERVA WHERE CANCELADA = TRUE ", nativeQuery = true)
