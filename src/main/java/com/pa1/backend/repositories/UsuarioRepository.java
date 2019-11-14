@@ -14,8 +14,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
 	 @Query(value = "SELECT * FROM USUARIO ORDER BY nome WHERE TIPO_USUARIO = ?1", nativeQuery = true)
 	    List<Usuario> findAllTipo(Integer d);
-	 
 
+	@Query(value = "SELECT * FROM USUARIO ORDER BY nome", nativeQuery = true)
+	List<Usuario> findAll();
 	 
 	 @Query(value = "SELECT * FROM USUARIO WHERE TIPO_USUARIO = ?1 OR TIPO_USUARIO=?2", nativeQuery = true)
 	    List<Usuario> findAllT(Integer x,Integer y);
