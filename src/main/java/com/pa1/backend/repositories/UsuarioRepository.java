@@ -12,7 +12,7 @@ import com.pa1.backend.domain.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
-	 @Query(value = "SELECT * FROM USUARIO WHERE TIPO_USUARIO = ?1", nativeQuery = true)
+	 @Query(value = "SELECT * FROM USUARIO ORDER BY nome WHERE TIPO_USUARIO = ?1", nativeQuery = true)
 	    List<Usuario> findAllTipo(Integer d);
 	 
 
