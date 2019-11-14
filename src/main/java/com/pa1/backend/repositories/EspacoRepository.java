@@ -11,6 +11,9 @@ import java.util.List;
 @Repository
 public interface EspacoRepository extends JpaRepository<Espaco, Integer> {
 
+    @Query(value = "SELECT * FROM ESPACO ORDER BY nome ", nativeQuery = true)
+    List<Espaco> findAll( );
+
     @Query(value = "SELECT * FROM ESPACO ORDER BY nome WHERE LOCALIZACAO = ?1", nativeQuery = true)
     List<Espaco> findByLocalizacao(String local);
 
