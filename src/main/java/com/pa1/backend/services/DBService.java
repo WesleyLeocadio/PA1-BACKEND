@@ -49,11 +49,11 @@ public class DBService {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
-		Integer horarios1[] = {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-		Integer horarios2[] = {0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0};
-		Integer horarios3[] = {0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0};
-		Integer horarios4[] = {0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0};
-		Integer horarios5[] = {0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0};
+		Integer horarios1[] = {1,1,0,0,0,0,0,0,0,0,0,0};
+		Integer horarios2[] = {0,0,1,1,0,0,0,0,0,0,0,0};
+		Integer horarios3[] = {0,0,0,0,1,1,0,0,0,0,0,0};
+		Integer horarios4[] = {0,0,0,0,1,1,0,0,0,0,0,0};
+		Integer horarios5[] = {0,0,0,0,1,1,0,0,0,0,0,0};
 
 		Integer diaSemana1[] = {0,1,0,0,0,0,0};
 		Integer diaSemana2[] = {0,0,0,1,0,0,0};

@@ -21,7 +21,7 @@ public class Reserva implements Serializable{
 	private Integer id;
 	private Date dataReserva;
 	private String justificativa;
-	private Integer horarios[] = new Integer[16];
+	private Integer horarios[] = new Integer[12];
 	private Integer diaSemana[] = new Integer[7];
 	private Boolean aprovada;
 	private Boolean cancelada;

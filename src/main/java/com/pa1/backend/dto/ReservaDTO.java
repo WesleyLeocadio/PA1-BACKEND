@@ -11,7 +11,7 @@ public class ReservaDTO  implements Serializable{
 	private Integer id;
 	private String dataReserva;
 	private String justificativa;
-	private Integer horarios[] = new Integer[16];
+	private Integer horarios[] = new Integer[12];
 	private Integer diaSemana[] = new Integer[7];
 	private Boolean aprovada;
 	private Boolean cancelada;
