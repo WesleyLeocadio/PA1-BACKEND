@@ -24,12 +24,15 @@ public class ReservaService {
 
 	@Autowired
 	private EspacoResouce espaco;
-
 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-
 	public Reserva fromDTO(ReservaDTO objDto) throws ParseException {
+		System.out.println(objDto.getData());
+		System.out.println(objDto.getAprovada());
+		System.out.println(objDto.getDiaSemana());
+		System.out.println(objDto.getJustificativa());
+		System.out.println(objDto.getCancelada());
 		Reserva r1 = new Reserva(null,
-				sdf.parse(objDto.getDataReserva()),
+				sdf.parse(objDto.getData()),
 				objDto.getJustificativa(),
 				objDto.getHorarios(),
 				objDto.getDiaSemana(),

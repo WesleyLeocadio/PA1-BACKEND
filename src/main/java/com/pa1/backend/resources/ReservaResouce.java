@@ -87,6 +87,7 @@ public class ReservaResouce {
         return ResponseEntity.ok().body(list);
     }
 
+
     @ApiOperation("Listar Reservas Canceladas")
     @RequestMapping(path = {"/canceladas"},method = RequestMethod.GET)
     public ResponseEntity<List<Reserva>> findByCanceladas(){
@@ -128,7 +129,7 @@ public class ReservaResouce {
             @Valid @RequestBody ReservaDTO objDto
     ){
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        //SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         Reserva obj = new Reserva();
 
         try {
@@ -193,7 +194,8 @@ public class ReservaResouce {
         List<Reserva> list = service.findByReserva(obj.getEspaco().getId(), data);
         if(!list.isEmpty()){
             for (Reserva reserva : list) {
-                for (int j = 0; j < reserva.getHorarios().length; j++) {
+                for (int j = 0; j < reserva.getHorarios().
+                        length; j++) {
                     Integer horariosobj[] = obj.getHorarios();
                     Integer horariosReserva[] = reserva.getHorarios();
                     if (horariosobj[j] == 1 && horariosReserva[j] == 1) {
