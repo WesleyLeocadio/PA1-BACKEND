@@ -19,6 +19,9 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
     @Query(value = "SELECT * FROM RESERVA WHERE ID = ?1", nativeQuery = true)
     List<Reserva> findByEspaco(Espaco e);
 
+    @Query(value = "SELECT * FROM RESERVA WHERE ESPACO_ID = ?1 AND DATA_RESERVA = ?2 ", nativeQuery = true)
+    List<Reserva> findByDateEspaco(Integer id, Date d);
+
     @Query(value = "SELECT * FROM RESERVA WHERE ID = ?1 AND DATA_RESERVA = ?2 ", nativeQuery = true)
     List<Reserva> findByReserva(Integer id, Date d);
 

@@ -53,7 +53,7 @@ public class ReservaService {
 	}
 
 	public List<Reserva> findByDateEspaco(Integer id, Date data){
-		return repo.findByReserva(id, data);
+		return repo.findByDateEspaco(id, data);
 	}
 
 	public List<Reserva> findAll() {
