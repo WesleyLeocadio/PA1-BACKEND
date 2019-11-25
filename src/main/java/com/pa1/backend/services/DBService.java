@@ -61,23 +61,23 @@ public class DBService {
 		Integer diaSemana4[] = {0,0,0,1,0,0,0};
 		Integer diaSemana5[] = {0,0,0,0,1,0,0};
 
-		Reserva r1 = new Reserva(null,sdf.parse("15-09-2019"),"", horarios1, diaSemana1, true, false, esp1, user1);
+		Reserva r1 = new Reserva(null,sdf.parse("15-09-2019"),sdf.parse("15-09-2019"),"", horarios1, diaSemana1, true, false, esp1, user1);
 
-		Reserva r2 = new Reserva(null,sdf.parse("26-12-2019"), "", horarios2, diaSemana2, false, false, esp2, user2);
-		Reserva r3 = new Reserva(null,sdf.parse("02-12-2019"), "", horarios2, diaSemana2, false, false, esp2, user2);
+		Reserva r2 = new Reserva(null,sdf.parse("26-12-2019"),sdf.parse("26-12-2019"), "", horarios2, diaSemana2, false, false, esp2, user2);
+		Reserva r3 = new Reserva(null,sdf.parse("02-12-2019"),sdf.parse("02-12-2019"), "", horarios2, diaSemana2, false, false, esp2, user2);
 
-		Reserva r4 = new Reserva(null,sdf.parse("24-12-2019"), "", horarios2, diaSemana3, false, false, esp5, user3);
-		Reserva r5 = new Reserva(null,sdf.parse("25-12-2019"), "", horarios2, diaSemana4, false, false, esp5, user4);
-		Reserva r6 = new Reserva(null,sdf.parse("26-12-2019"), "", horarios2, diaSemana5, false, false, esp5, user5);
+		Reserva r4 = new Reserva(null,sdf.parse("24-12-2019"),sdf.parse("24-12-2019"), "", horarios2, diaSemana3, false, false, esp5, user3);
+		Reserva r5 = new Reserva(null,sdf.parse("25-12-2019"),sdf.parse("25-12-2019"), "", horarios2, diaSemana4, false, false, esp5, user4);
+		Reserva r6 = new Reserva(null,sdf.parse("26-12-2019"), sdf.parse("26-12-2019"), "", horarios2, diaSemana5, false, false, esp5, user5);
 
-		Reserva r7 = new Reserva(null,sdf.parse("22-12-2019"),"", horarios4, diaSemana1, true, false, esp1, user1);
-		Reserva r8 = new Reserva(null,sdf.parse("29-12-2019"),"", horarios5, diaSemana1, true, false, esp1, user1);
+		Reserva r7 = new Reserva(null,sdf.parse("22-12-2019"),sdf.parse("22-12-2019"),"", horarios4, diaSemana1, true, false, esp1, user1);
+		Reserva r8 = new Reserva(null,sdf.parse("29-12-2019"),sdf.parse("29-12-2019"),"", horarios5, diaSemana1, true, false, esp1, user1);
 		
 		esp1.getReservas().addAll(Arrays.asList(r1));
 		esp2.getReservas().addAll(Arrays.asList(r2));
 		
 		//espacoRepository.save(Arrays.asList(esp1,esp2,esp3,esp4,esp5));
-		//reservaRepository.save(Arrays.asList(r1,r2,r3,r4,r5));
+		//reservaRepository.save(Arrays.asList(r1,r2,r3,r4,r5,r6,r7,r8));
 
 	}
 

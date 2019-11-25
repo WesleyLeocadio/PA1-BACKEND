@@ -27,7 +27,8 @@ public class ReservaService {
 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 	public Reserva fromDTO(ReservaDTO objDto) throws ParseException {
 		Reserva r1 = new Reserva(null,
-				sdf.parse(objDto.getDataReserva()),
+				sdf.parse(objDto.getDataInicio()),
+				sdf.parse(objDto.getDataFim()),
 				objDto.getJustificativa(),
 				objDto.getHorarios(),
 				objDto.getDiaSemana(),

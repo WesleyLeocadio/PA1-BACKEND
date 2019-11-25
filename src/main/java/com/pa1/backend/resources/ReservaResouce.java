@@ -157,7 +157,7 @@ public class ReservaResouce {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if(!detectaColisao(obj, obj.getData())){
+        if(!detectaColisao(obj, obj.getDataInicio())){
             service.insert(obj);
             URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                     .buildAndExpand(obj.getId())
@@ -192,7 +192,7 @@ public class ReservaResouce {
     ){
         Reserva obj = service.buscar(id);
         if(!detectaColisao(obj, data)){
-            obj.setData(data);
+            obj.setDataInicio(data);
             service.update(obj);
             return ResponseEntity.ok().build();
         }else{
