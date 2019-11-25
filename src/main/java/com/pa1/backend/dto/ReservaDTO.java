@@ -9,7 +9,7 @@ public class ReservaDTO  implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private Integer id =null;
-	private String data;
+	private String dataReserva;
 	private String justificativa;
 	private Integer horarios[] = new Integer[12];
 	private Integer diaSemana[] = new Integer[7];
@@ -22,8 +22,8 @@ public class ReservaDTO  implements Serializable{
 		
 	}
 
-	public ReservaDTO(String data, String justificativa, Integer[] horarios, Integer[] diaSemana, Boolean aprovada, Boolean cancelada, Espaco espaco, Usuario usuario) {
-		this.data = data;
+	public ReservaDTO(String dataReserva, String justificativa, Integer[] horarios, Integer[] diaSemana, Boolean aprovada, Boolean cancelada, Espaco espaco, Usuario usuario) {
+		this.dataReserva = dataReserva;
 		this.justificativa = justificativa;
 		this.horarios = horarios;
 		this.diaSemana = diaSemana;
@@ -42,12 +42,12 @@ public class ReservaDTO  implements Serializable{
 	}
 
 
-	public String getData() {
-		return data;
+	public String getDataReserva() {
+		return dataReserva;
 	}
 
-	public void setData(String data) {
-		this.data = data;
+	public void setDataReserva(String dataReserva) {
+		this.dataReserva = dataReserva;
 	}
 
 	public String getJustificativa() {
