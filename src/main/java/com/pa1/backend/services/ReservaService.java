@@ -26,11 +26,6 @@ public class ReservaService {
 	private EspacoResouce espaco;
 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 	public Reserva fromDTO(ReservaDTO objDto) throws ParseException {
-		System.out.println(objDto.getDataReserva());
-		System.out.println(objDto.getAprovada());
-		System.out.println(objDto.getDiaSemana());
-		System.out.println(objDto.getJustificativa());
-		System.out.println(objDto.getCancelada());
 		Reserva r1 = new Reserva(null,
 				sdf.parse(objDto.getDataReserva()),
 				objDto.getJustificativa(),
@@ -55,6 +50,10 @@ public class ReservaService {
 
 	public List<Reserva> findByDate(Date d){
 		return repo.findByDate(d);
+	}
+
+	public List<Reserva> findByDateEspaco(Integer id, Date data){
+		return repo.findByReserva(id, data);
 	}
 
 	public List<Reserva> findAll() {
