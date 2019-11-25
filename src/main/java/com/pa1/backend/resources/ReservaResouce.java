@@ -74,7 +74,7 @@ public class ReservaResouce {
     }
 
     @ApiOperation("Listar Reservas pela data de um Espaço")
-    @RequestMapping(path = {"/date"},method = RequestMethod.GET)
+    @RequestMapping(path = {"/dateEspaco"},method = RequestMethod.GET)
     public ResponseEntity<List<Reserva>> findByDateEspaco(
             @ApiParam("Id do Espaço")
             @RequestParam Integer id,
