@@ -39,7 +39,7 @@ public class DBService {
 		Usuario user4 = new Usuario(null, "Ana Bheatriz Chacon","anabheatrizchacon@outlook.com.com","00000000",3,pe.encode("biachacon"));
 		Usuario user5 = new Usuario(null, "Tiago batista","tiagoBatista@gmail.com","99928989",2,pe.encode("tiago"));
 
-		usuarioRepository.save(Arrays.asList(user1,user2,user3,user4,user5));
+		//usuarioRepository.save(Arrays.asList(user1,user2,user3,user4,user5));
 
 		Espaco esp1 = new Espaco(null,"Lab 2","Laboratório de informática","Prédio de Informática","Luiz Antônio",false, "", false, true, 30, 123);
 		Espaco esp2 = new Espaco(null,"Lab 3","Sala de estudos","Prédio de Informática","Luiz Antônio", false, "", false, true, 40, 123);
@@ -73,11 +73,11 @@ public class DBService {
 		Reserva r7 = new Reserva(null,sdf.parse("22-12-2019"),sdf.parse("22-12-2019"),"", horarios4, diaSemana1, true, false, esp1, user1);
 		Reserva r8 = new Reserva(null,sdf.parse("29-12-2019"),sdf.parse("29-12-2019"),"", horarios5, diaSemana1, true, false, esp1, user1);
 		
-		esp1.getReservas().addAll(Arrays.asList(r1));
-		esp2.getReservas().addAll(Arrays.asList(r2));
+		//esp1.getReservas().addAll(Arrays.asList(r1));
+		//esp2.getReservas().addAll(Arrays.asList(r2));
 		
-		espacoRepository.save(Arrays.asList(esp1,esp2,esp3,esp4,esp5));
-		reservaRepository.save(Arrays.asList(r1,r2,r3,r4,r5,r6,r7,r8));
+		//espacoRepository.save(Arrays.asList(esp1,esp2,esp3,esp4,esp5));
+		//reservaRepository.save(Arrays.asList(r1,r2,r3,r4,r5,r6,r7,r8));
 
 	}
 
