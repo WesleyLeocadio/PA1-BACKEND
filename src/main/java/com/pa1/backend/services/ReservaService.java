@@ -85,5 +85,6 @@ public class ReservaService {
 	public List<Reserva> findByReservaDateEspaco(Integer idEspaco, Date d){
 		return repo.findByDateEspaco(idEspaco,d);
 	}
+	//Alteração do nome
 
 }
