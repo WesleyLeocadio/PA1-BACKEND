@@ -82,8 +82,8 @@ public class ReservaService {
 		return repo.findByPendentes();
 	}
 
-	public List<Reserva> findByReserva(Integer idEspaco, Date d){
-		return repo.findByReserva(idEspaco,d);
+	public List<Reserva> findByReservaDateEspaco(Integer idEspaco, Date d){
+		return repo.findByDateEspaco(idEspaco,d);
 	}
 
 }
