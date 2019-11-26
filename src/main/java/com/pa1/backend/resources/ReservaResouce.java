@@ -12,10 +12,12 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.pa1.backend.dto.ReservaDTO;
+import com.sun.istack.internal.Interned;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -158,17 +160,21 @@ public class ReservaResouce {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        if (!detectaColisao(obj, obj.getDataInicio(), obj.getDataFim(), obj.getDiaSemana())) {
-            for (int i = 0; i < listaDatas.size(); i++) {
-                obj.setId(null);
-                obj.setDataInicio(listaDatas.get(i));
-                service.insert(obj);
-                URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                        .buildAndExpand(obj.getId())
-                        .toUri();
-                return ResponseEntity.created(uri).build();
+        if(obj.getDiaSemana()==recuperaDia(obj.getDataInicio())){
+            if (!detectaColisao(obj, obj.getDataInicio(), obj.getDataFim(), obj.getDiaSemana())) {
+                for (int i = 0; i < listaDatas.size(); i++) {
+                    obj.setId(null);
+                    obj.setDataInicio(listaDatas.get(i));
+                    service.insert(obj);
+                    URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                            .buildAndExpand(obj.getId())
+                            .toUri();
+                    System.out.println("cadastrado com sucesso");
+                    return ResponseEntity.created(uri).build();
+                }
             }
+            System.out.println("não cadastrado");
+            return ResponseEntity.noContent().build();
         }
         return ResponseEntity.noContent().build();
     }
@@ -189,16 +195,18 @@ public class ReservaResouce {
     public ResponseEntity<Void> updateReserva(
             @ApiParam("Id da Reserva")
             @RequestParam Integer id,
-            Integer[] diaSemana,
             @ApiParam("Data da Reserva no formato dd-MM-yyyy")
             @DateTimeFormat(pattern="dd-MM-yyyy") Date dataInicio
             //@DateTimeFormat(pattern="dd-MM-yyyy") Date dataFim
     ){
         //serviço editando apenas uma reserva por vez
         Reserva obj = service.buscar(id);
+        Integer[] diaSemana = recuperaDia(dataInicio);
+
         if(!detectaColisao(obj, dataInicio, dataInicio, diaSemana)){
             obj.setDataInicio(dataInicio);
             obj.setDataFim(dataInicio);
+            obj.setDiaSemana(diaSemana);
             service.update(obj);
             return ResponseEntity.ok().build();
         }else{
@@ -214,9 +222,8 @@ public class ReservaResouce {
     }
 
     private boolean detectaColisao(Reserva obj, Date dataInicio, Date dataFim, Integer[] diaSemana){
-        System.out.println("Realizando teste de Colisao");
+        //System.out.println("Realizando teste de Colisao");
         listaDatas.clear();
-
         listaDatas = determinarDatas(dataInicio, dataFim, diaSemana);
 
         for(int i =0 ;i <listaDatas.size();i++){
@@ -229,6 +236,7 @@ public class ReservaResouce {
                         Integer horariosobj[] = obj.getHorarios();
                         Integer horariosReserva[] = reserva.getHorarios();
                         if (horariosobj[j] == 1 && horariosReserva[j] == 1) {
+                            System.out.println("colisao detectada");
                             return true;
                         }
                     }
@@ -267,7 +275,28 @@ public class ReservaResouce {
             dt = cal.getTime();
         }
         return listaDatas;
-
     }
 
+    private Integer[] recuperaDia(Date dataInicio) {
+        Integer[] diaSemana = {};
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dataInicio);
+        int dia = cal.get(Calendar.DAY_OF_WEEK);
+        if(dia == 1){
+            diaSemana = new Integer[]{1, 0, 0, 0, 0, 0, 0};
+        }else if(dia == 2){
+            diaSemana = new Integer[]{0, 1, 0, 0, 0, 0, 0};
+        }else if(dia == 3){
+            diaSemana = new Integer[]{0, 0, 1, 0, 0, 0, 0};
+        }else if(dia == 4){
+            diaSemana = new Integer[]{0, 0, 0, 1, 0, 0, 0};
+        }else if(dia == 5){
+            diaSemana = new Integer[]{0, 0, 0, 0, 1, 0, 0};
+        }else if(dia == 6){
+            diaSemana = new Integer[]{0, 0, 0, 0, 0, 1, 0};
+        }else if(dia == 7){
+            diaSemana = new Integer[]{0, 0, 0, 0, 0, 0, 1};
+        }
+        return diaSemana;
+    }
 }
