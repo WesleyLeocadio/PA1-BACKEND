@@ -30,8 +30,6 @@ import com.pa1.backend.services.ReservaService;
 @RequestMapping(value = "/reservas")
 public class ReservaResouce {
 
-    private List<Date> listaDatas = new ArrayList<>();
-
     @Autowired
     private ReservaService service;
 
@@ -161,22 +159,16 @@ public class ReservaResouce {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if(obj.getDiaSemana()==recuperaDia(obj.getDataInicio())){
-            if (!detectaColisao(obj, obj.getDataInicio(), obj.getDataFim(), obj.getDiaSemana())) {
-                for (int i = 0; i < listaDatas.size(); i++) {
-                    obj.setId(null);
-                    obj.setDataInicio(listaDatas.get(i));
-                    service.insert(obj);
-                    URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                            .buildAndExpand(obj.getId())
-                            .toUri();
-                    System.out.println("cadastrado com sucesso");
-                    return ResponseEntity.created(uri).build();
-                }
-            }
-            System.out.println("não cadastrado");
-            return ResponseEntity.noContent().build();
+
+        if (!detectaColisao(obj, obj.getDataInicio(), obj.getDataFim(), obj.getDiaSemana())) {
+                service.insert(obj);
+                URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                        .buildAndExpand(obj.getId())
+                        .toUri();
+                System.out.println("cadastrado com sucesso");
+                return ResponseEntity.created(uri).build();
         }
+        System.out.println("não cadastrado");
         return ResponseEntity.noContent().build();
     }
         /*try {
@@ -197,40 +189,33 @@ public class ReservaResouce {
             @ApiParam("Id da Reserva")
             @RequestParam Integer id,
             @ApiParam("Data da Reserva no formato dd-MM-yyyy")
-            @DateTimeFormat(pattern="dd-MM-yyyy") Date dataInicio
-            //@DateTimeFormat(pattern="dd-MM-yyyy") Date dataFim
+            @DateTimeFormat(pattern="dd-MM-yyyy") Date dataInicio,
+            @DateTimeFormat(pattern="dd-MM-yyyy") Date dataFim
     ){
         //serviço editando apenas uma reserva por vez
         Reserva obj = service.buscar(id);
         Integer[] diaSemana = recuperaDia(dataInicio);
 
-        if(!detectaColisao(obj, dataInicio, dataInicio, diaSemana)){
+        if(!detectaColisao(obj, dataInicio, dataFim, diaSemana)){
             obj.setDataInicio(dataInicio);
-            obj.setDataFim(dataInicio);
+            obj.setDataFim(dataFim);
             obj.setDiaSemana(diaSemana);
             service.update(obj);
             return ResponseEntity.ok().build();
         }else{
-            //System.out.println("não atualizada");
+            System.out.println("não atualizada");
             return ResponseEntity.noContent().build();
         }
-
-       /* Reserva obj = service.buscar(id);
-
-        obj.setData(data);
-        service.update(obj);
-        return ResponseEntity.ok().build();*/
     }
 
     private boolean detectaColisao(Reserva obj, Date dataInicio, Date dataFim, Integer[] diaSemana){
-        //System.out.println("Realizando teste de Colisao");
-        listaDatas.clear();
+        System.out.println("Realizando teste de Colisao");
+        List<Date> listaDatas = new ArrayList<>();
         listaDatas = determinarDatas(dataInicio, dataFim, diaSemana);
 
         for(int i =0 ;i <listaDatas.size();i++){
-
             List<Reserva> list = service.findByReservaDateEspaco(obj.getEspaco().getId(), listaDatas.get(i));
-
+            System.out.println("Tamanho da Lista"+list.size());
             if(!list.isEmpty()){
                 for (Reserva reserva : list) {
                     for (int j = 0; j < reserva.getHorarios().length; j++) {
@@ -250,6 +235,7 @@ public class ReservaResouce {
     }
 
     private List determinarDatas(Date inicio, Date fim, Integer[] diaSemana){
+        System.out.println("Criando datas");
         List<Date> listaDatas = new ArrayList<Date>();
         int dia = 0;
 
@@ -268,10 +254,8 @@ public class ReservaResouce {
         Date dt;
 
         for (dt = dt1; dt.compareTo (dt2) <= 0; ) {
-            if (cal.get(Calendar.DAY_OF_WEEK)==dia){
-                //System.out.println (df.format (dt));
-                listaDatas.add(dt);
-            }
+            System.out.println (df.format (dt));
+            listaDatas.add(dt);
             cal.add (Calendar.DATE, +1);
             dt = cal.getTime();
         }
