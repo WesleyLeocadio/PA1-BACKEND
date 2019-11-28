@@ -86,12 +86,14 @@ public class ReservaResouce {
     ){
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         Date d = new Date();
+        Date d2 = new Date();
         try {
             d = sdf.parse(date);
+            d2 =sdf.parse(date);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        List<Reserva> list= service.findByDateEspaco(id,d);
+        List<Reserva> list= service.findByDateEspaco(id, d, d2);
         return ResponseEntity.ok().body(list);
     }
 
@@ -214,7 +216,7 @@ public class ReservaResouce {
         listaDatas = determinarDatas(dataInicio, dataFim, diaSemana);
 
         for(int i =0 ;i <listaDatas.size();i++){
-            List<Reserva> list = service.findByReservaDateEspaco(obj.getEspaco().getId(), listaDatas.get(i));
+            List<Reserva> list = service.findByReservaDateEspaco(obj.getEspaco().getId(), listaDatas.get(i), dataFim);
             System.out.println("Tamanho da Lista"+list.size());
             if(!list.isEmpty()){
                 for (Reserva reserva : list) {

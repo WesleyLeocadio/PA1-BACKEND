@@ -53,8 +53,8 @@ public class ReservaService {
 		return repo.findByDate(d);
 	}
 
-	public List<Reserva> findByDateEspaco(Integer id, Date data){
-		return repo.findByDateEspaco(id, data);
+	public List<Reserva> findByDateEspaco(Integer id, Date d, Date d2){
+		return repo.findByDateEspaco(id, d, d2);
 	}
 
 	public List<Reserva> findAll() {
@@ -82,8 +82,8 @@ public class ReservaService {
 		return repo.findByPendentes();
 	}
 
-	public List<Reserva> findByReservaDateEspaco(Integer idEspaco, Date d){
-		return repo.findByDateEspaco(idEspaco,d);
+	public List<Reserva> findByReservaDateEspaco(Integer idEspaco, Date d, Date d2){
+		return repo.findByDateEspaco(idEspaco, d, d2);
 	}
 	//Alteração do nome
 
