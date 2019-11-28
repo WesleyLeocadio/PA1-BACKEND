@@ -12,7 +12,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.pa1.backend.dto.ReservaDTO;
-import com.sun.istack.internal.Interned;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -167,10 +166,8 @@ public class ReservaResouce {
                 URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                         .buildAndExpand(obj.getId())
                         .toUri();
-                System.out.println("cadastrado com sucesso");
                 return ResponseEntity.created(uri).build();
         }
-        System.out.println("não cadastrado");
         return ResponseEntity.noContent().build();
     }
         /*try {
@@ -205,26 +202,22 @@ public class ReservaResouce {
             service.update(obj);
             return ResponseEntity.ok().build();
         }else{
-            System.out.println("não atualizada");
             return ResponseEntity.noContent().build();
         }
     }
 
     private boolean detectaColisao(Reserva obj, Date dataInicio, Date dataFim, Integer[] diaSemana){
-        System.out.println("Realizando teste de Colisao");
         List<Date> listaDatas = new ArrayList<>();
         listaDatas = determinarDatas(dataInicio, dataFim, diaSemana);
 
         for(int i =0 ;i <listaDatas.size();i++){
             List<Reserva> list = service.findByReservaDateEspaco(obj.getEspaco().getId(), listaDatas.get(i), dataFim);
-            System.out.println("Tamanho da Lista"+list.size());
             if(!list.isEmpty()){
                 for (Reserva reserva : list) {
                     for (int j = 0; j < reserva.getHorarios().length; j++) {
                         Integer horariosobj[] = obj.getHorarios();
                         Integer horariosReserva[] = reserva.getHorarios();
                         if (horariosobj[j] == 1 && horariosReserva[j] == 1) {
-                            System.out.println("colisao detectada");
                             return true;
                         }
                     }
@@ -237,7 +230,6 @@ public class ReservaResouce {
     }
 
     private List determinarDatas(Date inicio, Date fim, Integer[] diaSemana){
-        System.out.println("Criando datas");
         List<Date> listaDatas = new ArrayList<Date>();
         int dia = 0;
 
