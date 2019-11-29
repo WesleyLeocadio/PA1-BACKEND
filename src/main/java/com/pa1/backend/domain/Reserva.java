@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -19,8 +20,13 @@ public class Reserva implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy", timezone="Brazil/East")
 	private Date dataInicio;
+
+	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="dd-MM-yyyy", timezone="Brazil/East")
 	private  Date dataFim;
+
 	private String justificativa;
 	private Integer horarios[] = new Integer[12];
 	private Integer diaSemana[] = new Integer[7];
