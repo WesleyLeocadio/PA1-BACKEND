@@ -248,8 +248,11 @@ public class ReservaResouce {
         Date dt;
 
         for (dt = dt1; dt.compareTo (dt2) <= 0; ) {
+
+            if(Calendar.DAY_OF_WEEK == dia){
+                listaDatas.add(dt);
+            }
             System.out.println (df.format (dt));
-            listaDatas.add(dt);
             cal.add (Calendar.DATE, +1);
             dt = cal.getTime();
         }
